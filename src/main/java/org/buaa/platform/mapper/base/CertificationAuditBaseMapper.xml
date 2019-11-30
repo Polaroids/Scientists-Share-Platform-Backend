@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buaa.platform.mapper.base.CertificationAuditBaseMapper">
+
+
+    <insert id="insertCertificationAudit" >
+        INSERT INTO `CertificationAudit`
+        (
+        <trim suffixOverrides=",">
+                    <if test="auditID!=null">
+                        `auditID`,
+                    </if>
+                    <if test="adminID!=null">
+                        `adminID`,
+                    </if>
+                    <if test="userID!=null">
+                        `userID`,
+                    </if>
+                    <if test="files!=null">
+                        `files`,
+                    </if>
+                    <if test="status!=null">
+                        `status`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="auditID!=null">
+                    #{auditID},
+                </if>
+                <if test="adminID!=null">
+                    #{adminID},
+                </if>
+                <if test="userID!=null">
+                    #{userID},
+                </if>
+                <if test="files!=null">
+                    #{files},
+                </if>
+                <if test="status!=null">
+                    #{status},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateCertificationAudit">
+        UPDATE `CertificationAudit`
+        SET
+        <trim suffixOverrides=",">
+            <if test="adminID != null and adminID!=''">
+                `adminID` = #{adminID},
+            </if>
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID},
+            </if>
+            <if test="files != null and files!=''">
+                `files` = #{files},
+            </if>
+            <if test="status != null and status!=''">
+                `status` = #{status},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `auditID` = #{auditID} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `CertificationAudit`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.adminID != null and set.adminID!=''">
+            `adminID` = #{set.adminID},
+        </if>
+        <if test="set.userID != null and set.userID!=''">
+            `userID` = #{set.userID},
+        </if>
+        <if test="set.files != null and set.files!=''">
+            `files` = #{set.files},
+        </if>
+        <if test="set.status != null and set.status!=''">
+            `status` = #{set.status},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.auditIDList != null">
+                    `auditID` in
+                    <foreach collection="where.auditIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAuditID!=null and where.fuzzyAuditID.size()>0">
+                (
+                <foreach collection="where.fuzzyAuditID"  separator="or" item="item">
+                    `AuditID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAuditID!=null and where.rightFuzzyAuditID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAuditID"  separator="or" item="item">
+                    `AuditID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.adminIDList != null">
+                    `adminID` in
+                    <foreach collection="where.adminIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAdminID!=null and where.fuzzyAdminID.size()>0">
+                (
+                <foreach collection="where.fuzzyAdminID"  separator="or" item="item">
+                    `AdminID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAdminID!=null and where.rightFuzzyAdminID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAdminID"  separator="or" item="item">
+                    `AdminID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.userIDList != null">
+                    `userID` in
+                    <foreach collection="where.userIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyUserID!=null and where.fuzzyUserID.size()>0">
+                (
+                <foreach collection="where.fuzzyUserID"  separator="or" item="item">
+                    `UserID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyUserID!=null and where.rightFuzzyUserID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyUserID"  separator="or" item="item">
+                    `UserID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.filesList != null">
+                    `files` in
+                    <foreach collection="where.filesList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFiles!=null and where.fuzzyFiles.size()>0">
+                (
+                <foreach collection="where.fuzzyFiles"  separator="or" item="item">
+                    `Files` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFiles!=null and where.rightFuzzyFiles.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFiles"  separator="or" item="item">
+                    `Files` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.statusList != null">
+                    `status` in
+                    <foreach collection="where.statusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyStatus!=null and where.fuzzyStatus.size()>0">
+                (
+                <foreach collection="where.fuzzyStatus"  separator="or" item="item">
+                    `Status` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyStatus!=null and where.rightFuzzyStatus.size()>0">
+                (
+                <foreach collection="where.rightFuzzyStatus"  separator="or" item="item">
+                    `Status` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="org.buaa.platform.entity.CertificationAudit" id="CertificationAuditMap">
+        <result property="auditID" column="auditID"/>
+        <result property="adminID" column="adminID"/>
+        <result property="userID" column="userID"/>
+        <result property="files" column="files"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+
+    <select id="queryCertificationAudit" resultMap="CertificationAuditMap">
+        select
+        <include refid="baseResult"></include>
+        from  `CertificationAudit`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="auditID != null and auditID!=''">
+                `auditID` = #{auditID} and
+            </if>
+            <if test="adminID != null and adminID!=''">
+                `adminID` = #{adminID} and
+            </if>
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID} and
+            </if>
+            <if test="files != null and files!=''">
+                `files` = #{files} and
+            </if>
+            <if test="status != null and status!=''">
+                `status` = #{status} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.CertificationAudit$QueryBuilder) == true">
+                <if test="auditIDList != null">
+                    `auditID` in
+                    <foreach collection="auditIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAuditID!=null and fuzzyAuditID.size()>0">
+                    (
+                    <foreach collection="fuzzyAuditID"  separator="or" item="item">
+                        `AuditID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAuditID!=null and rightFuzzyAuditID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAuditID"  separator="or" item="item">
+                        `AuditID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="adminIDList != null">
+                    `adminID` in
+                    <foreach collection="adminIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAdminID!=null and fuzzyAdminID.size()>0">
+                    (
+                    <foreach collection="fuzzyAdminID"  separator="or" item="item">
+                        `AdminID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAdminID!=null and rightFuzzyAdminID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAdminID"  separator="or" item="item">
+                        `AdminID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="userIDList != null">
+                    `userID` in
+                    <foreach collection="userIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyUserID!=null and fuzzyUserID.size()>0">
+                    (
+                    <foreach collection="fuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserID!=null and rightFuzzyUserID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="filesList != null">
+                    `files` in
+                    <foreach collection="filesList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFiles!=null and fuzzyFiles.size()>0">
+                    (
+                    <foreach collection="fuzzyFiles"  separator="or" item="item">
+                        `Files` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFiles!=null and rightFuzzyFiles.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFiles"  separator="or" item="item">
+                        `Files` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="statusList != null">
+                    `status` in
+                    <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyStatus!=null and fuzzyStatus.size()>0">
+                    (
+                    <foreach collection="fuzzyStatus"  separator="or" item="item">
+                        `Status` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyStatus!=null and rightFuzzyStatus.size()>0">
+                    (
+                    <foreach collection="rightFuzzyStatus"  separator="or" item="item">
+                        `Status` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryCertificationAuditLimit1" resultMap="CertificationAuditMap">
+        select
+        <include refid="baseResult"></include>
+        from  `CertificationAudit`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="auditID != null and auditID!=''">
+                `auditID` = #{auditID} and
+            </if>
+            <if test="adminID != null and adminID!=''">
+                `adminID` = #{adminID} and
+            </if>
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID} and
+            </if>
+            <if test="files != null and files!=''">
+                `files` = #{files} and
+            </if>
+            <if test="status != null and status!=''">
+                `status` = #{status} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.CertificationAudit$QueryBuilder) == true">
+                    <if test="auditIDList != null">
+                        `auditID` in
+                        <foreach collection="auditIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAuditID!=null and fuzzyAuditID.size()>0">
+                    (
+                    <foreach collection="fuzzyAuditID"  separator="or" item="item">
+                        `AuditID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAuditID!=null and rightFuzzyAuditID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAuditID"  separator="or" item="item">
+                        `AuditID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="adminIDList != null">
+                        `adminID` in
+                        <foreach collection="adminIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAdminID!=null and fuzzyAdminID.size()>0">
+                    (
+                    <foreach collection="fuzzyAdminID"  separator="or" item="item">
+                        `AdminID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAdminID!=null and rightFuzzyAdminID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAdminID"  separator="or" item="item">
+                        `AdminID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="userIDList != null">
+                        `userID` in
+                        <foreach collection="userIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyUserID!=null and fuzzyUserID.size()>0">
+                    (
+                    <foreach collection="fuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserID!=null and rightFuzzyUserID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="filesList != null">
+                        `files` in
+                        <foreach collection="filesList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFiles!=null and fuzzyFiles.size()>0">
+                    (
+                    <foreach collection="fuzzyFiles"  separator="or" item="item">
+                        `Files` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFiles!=null and rightFuzzyFiles.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFiles"  separator="or" item="item">
+                        `Files` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="statusList != null">
+                        `status` in
+                        <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyStatus!=null and fuzzyStatus.size()>0">
+                    (
+                    <foreach collection="fuzzyStatus"  separator="or" item="item">
+                        `Status` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyStatus!=null and rightFuzzyStatus.size()>0">
+                    (
+                    <foreach collection="rightFuzzyStatus"  separator="or" item="item">
+                        `Status` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `auditID`,
+        `adminID`,
+        `userID`,
+        `files`,
+        `status`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof org.buaa.platform.entity.CertificationAudit$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.auditID==true">
+                        `auditID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.adminID==true">
+                        `adminID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.userID==true">
+                        `userID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.files==true">
+                        `files`,
+                    </if>
+                    <if test="fetchFields.fetchFields.status==true">
+                        `status`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.auditID==null">
+                        `auditID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.adminID==null">
+                        `adminID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.userID==null">
+                        `userID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.files==null">
+                        `files`,
+                    </if>
+                    <if test="fetchFields.excludeFields.status==null">
+                        `status`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof org.buaa.platform.entity.CertificationAudit$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

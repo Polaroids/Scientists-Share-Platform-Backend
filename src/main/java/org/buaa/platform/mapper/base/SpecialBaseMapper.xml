@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buaa.platform.mapper.base.SpecialBaseMapper">
+
+
+    <insert id="insertSpecial" >
+        INSERT INTO `Special`
+        (
+        <trim suffixOverrides=",">
+                    <if test="specialID!=null">
+                        `specialID`,
+                    </if>
+                    <if test="institutionName!=null">
+                        `institutionName`,
+                    </if>
+                    <if test="userID!=null">
+                        `userID`,
+                    </if>
+                    <if test="name!=null">
+                        `name`,
+                    </if>
+                    <if test="claimed!=null">
+                        `claimed`,
+                    </if>
+                    <if test="email!=null">
+                        `email`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="specialID!=null">
+                    #{specialID},
+                </if>
+                <if test="institutionName!=null">
+                    #{institutionName},
+                </if>
+                <if test="userID!=null">
+                    #{userID},
+                </if>
+                <if test="name!=null">
+                    #{name},
+                </if>
+                <if test="claimed!=null">
+                    #{claimed},
+                </if>
+                <if test="email!=null">
+                    #{email},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateSpecial">
+        UPDATE `Special`
+        SET
+        <trim suffixOverrides=",">
+            <if test="institutionName != null and institutionName!=''">
+                `institutionName` = #{institutionName},
+            </if>
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID},
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="claimed != null">
+                `claimed` = #{claimed},
+            </if>
+            <if test="email != null and email!=''">
+                `email` = #{email},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `specialID` = #{specialID} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `Special`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.institutionName != null and set.institutionName!=''">
+            `institutionName` = #{set.institutionName},
+        </if>
+        <if test="set.userID != null and set.userID!=''">
+            `userID` = #{set.userID},
+        </if>
+        <if test="set.name != null and set.name!=''">
+            `name` = #{set.name},
+        </if>
+        <if test="set.claimed != null">
+            `claimed` = #{set.claimed},
+        </if>
+        <if test="set.email != null and set.email!=''">
+            `email` = #{set.email},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.specialIDList != null">
+                    `specialID` in
+                    <foreach collection="where.specialIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzySpecialID!=null and where.fuzzySpecialID.size()>0">
+                (
+                <foreach collection="where.fuzzySpecialID"  separator="or" item="item">
+                    `SpecialID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzySpecialID!=null and where.rightFuzzySpecialID.size()>0">
+                (
+                <foreach collection="where.rightFuzzySpecialID"  separator="or" item="item">
+                    `SpecialID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.institutionNameList != null">
+                    `institutionName` in
+                    <foreach collection="where.institutionNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyInstitutionName!=null and where.fuzzyInstitutionName.size()>0">
+                (
+                <foreach collection="where.fuzzyInstitutionName"  separator="or" item="item">
+                    `InstitutionName` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyInstitutionName!=null and where.rightFuzzyInstitutionName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyInstitutionName"  separator="or" item="item">
+                    `InstitutionName` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.userIDList != null">
+                    `userID` in
+                    <foreach collection="where.userIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyUserID!=null and where.fuzzyUserID.size()>0">
+                (
+                <foreach collection="where.fuzzyUserID"  separator="or" item="item">
+                    `UserID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyUserID!=null and where.rightFuzzyUserID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyUserID"  separator="or" item="item">
+                    `UserID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.nameList != null">
+                    `name` in
+                    <foreach collection="where.nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyName!=null and where.fuzzyName.size()>0">
+                (
+                <foreach collection="where.fuzzyName"  separator="or" item="item">
+                    `Name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyName!=null and where.rightFuzzyName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyName"  separator="or" item="item">
+                    `Name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.claimedList != null">
+                    `claimed` in
+                    <foreach collection="where.claimedList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.claimedSt !=null">
+                `claimed` >= #{where.claimedSt} and
+            </if>
+            <if test="where.claimedEd!=null">
+                `claimed` &lt;= #{where.claimedEd} and
+            </if>
+                <if test="where.emailList != null">
+                    `email` in
+                    <foreach collection="where.emailList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyEmail!=null and where.fuzzyEmail.size()>0">
+                (
+                <foreach collection="where.fuzzyEmail"  separator="or" item="item">
+                    `Email` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyEmail!=null and where.rightFuzzyEmail.size()>0">
+                (
+                <foreach collection="where.rightFuzzyEmail"  separator="or" item="item">
+                    `Email` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="org.buaa.platform.entity.Special" id="SpecialMap">
+        <result property="specialID" column="specialID"/>
+        <result property="institutionName" column="institutionName"/>
+        <result property="userID" column="userID"/>
+        <result property="name" column="name"/>
+        <result property="claimed" column="claimed"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+
+    <select id="querySpecial" resultMap="SpecialMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Special`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="specialID != null and specialID!=''">
+                `specialID` = #{specialID} and
+            </if>
+            <if test="institutionName != null and institutionName!=''">
+                `institutionName` = #{institutionName} and
+            </if>
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="claimed != null">
+                `claimed` = #{claimed} and
+            </if>
+            <if test="email != null and email!=''">
+                `email` = #{email} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Special$QueryBuilder) == true">
+                <if test="specialIDList != null">
+                    `specialID` in
+                    <foreach collection="specialIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySpecialID!=null and fuzzySpecialID.size()>0">
+                    (
+                    <foreach collection="fuzzySpecialID"  separator="or" item="item">
+                        `SpecialID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySpecialID!=null and rightFuzzySpecialID.size()>0">
+                    (
+                    <foreach collection="rightFuzzySpecialID"  separator="or" item="item">
+                        `SpecialID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="institutionNameList != null">
+                    `institutionName` in
+                    <foreach collection="institutionNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyInstitutionName!=null and fuzzyInstitutionName.size()>0">
+                    (
+                    <foreach collection="fuzzyInstitutionName"  separator="or" item="item">
+                        `InstitutionName` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyInstitutionName!=null and rightFuzzyInstitutionName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyInstitutionName"  separator="or" item="item">
+                        `InstitutionName` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="userIDList != null">
+                    `userID` in
+                    <foreach collection="userIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyUserID!=null and fuzzyUserID.size()>0">
+                    (
+                    <foreach collection="fuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserID!=null and rightFuzzyUserID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="nameList != null">
+                    `name` in
+                    <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="claimedList != null">
+                    `claimed` in
+                    <foreach collection="claimedList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="claimedSt !=null">
+                    `claimed` >= #{claimedSt} and
+                </if>
+                <if test="claimedEd!=null">
+                    `claimed` &lt;= #{claimedEd} and
+                </if>
+                <if test="emailList != null">
+                    `email` in
+                    <foreach collection="emailList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyEmail!=null and fuzzyEmail.size()>0">
+                    (
+                    <foreach collection="fuzzyEmail"  separator="or" item="item">
+                        `Email` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEmail!=null and rightFuzzyEmail.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEmail"  separator="or" item="item">
+                        `Email` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="querySpecialLimit1" resultMap="SpecialMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Special`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="specialID != null and specialID!=''">
+                `specialID` = #{specialID} and
+            </if>
+            <if test="institutionName != null and institutionName!=''">
+                `institutionName` = #{institutionName} and
+            </if>
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="claimed != null">
+                `claimed` = #{claimed} and
+            </if>
+            <if test="email != null and email!=''">
+                `email` = #{email} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Special$QueryBuilder) == true">
+                    <if test="specialIDList != null">
+                        `specialID` in
+                        <foreach collection="specialIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySpecialID!=null and fuzzySpecialID.size()>0">
+                    (
+                    <foreach collection="fuzzySpecialID"  separator="or" item="item">
+                        `SpecialID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySpecialID!=null and rightFuzzySpecialID.size()>0">
+                    (
+                    <foreach collection="rightFuzzySpecialID"  separator="or" item="item">
+                        `SpecialID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="institutionNameList != null">
+                        `institutionName` in
+                        <foreach collection="institutionNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyInstitutionName!=null and fuzzyInstitutionName.size()>0">
+                    (
+                    <foreach collection="fuzzyInstitutionName"  separator="or" item="item">
+                        `InstitutionName` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyInstitutionName!=null and rightFuzzyInstitutionName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyInstitutionName"  separator="or" item="item">
+                        `InstitutionName` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="userIDList != null">
+                        `userID` in
+                        <foreach collection="userIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyUserID!=null and fuzzyUserID.size()>0">
+                    (
+                    <foreach collection="fuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserID!=null and rightFuzzyUserID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="nameList != null">
+                        `name` in
+                        <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="claimedList != null">
+                        `claimed` in
+                        <foreach collection="claimedList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="claimedSt !=null">
+                    `claimed` >= #{claimedSt} and
+                </if>
+                <if test="claimedEd!=null">
+                    `claimed` &lt;= #{claimedEd} and
+                </if>
+                    <if test="emailList != null">
+                        `email` in
+                        <foreach collection="emailList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyEmail!=null and fuzzyEmail.size()>0">
+                    (
+                    <foreach collection="fuzzyEmail"  separator="or" item="item">
+                        `Email` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyEmail!=null and rightFuzzyEmail.size()>0">
+                    (
+                    <foreach collection="rightFuzzyEmail"  separator="or" item="item">
+                        `Email` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `specialID`,
+        `institutionName`,
+        `userID`,
+        `name`,
+        `claimed`+0 as `claimed`,
+        `email`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Special$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.specialID==true">
+                        `specialID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.institutionName==true">
+                        `institutionName`,
+                    </if>
+                    <if test="fetchFields.fetchFields.userID==true">
+                        `userID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.name==true">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.fetchFields.claimed==true">
+                        `claimed`+0 as `claimed`,
+                    </if>
+                    <if test="fetchFields.fetchFields.email==true">
+                        `email`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.specialID==null">
+                        `specialID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.institutionName==null">
+                        `institutionName`,
+                    </if>
+                    <if test="fetchFields.excludeFields.userID==null">
+                        `userID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.name==null">
+                        `name`,
+                    </if>
+                    <if test="fetchFields.excludeFields.claimed==null">
+                        `claimed`+0 as `claimed`,
+                    </if>
+                    <if test="fetchFields.excludeFields.email==null">
+                        `email`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof org.buaa.platform.entity.Special$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buaa.platform.mapper.base.InstitutionBaseMapper">
+
+
+    <insert id="insertInstitution" >
+        INSERT INTO `Institution`
+        (
+        <trim suffixOverrides=",">
+                    <if test="institutionName!=null">
+                        `institutionName`,
+                    </if>
+                    <if test="discription!=null">
+                        `discription`,
+                    </if>
+                    <if test="url!=null">
+                        `url`,
+                    </if>
+                    <if test="imgUrl!=null">
+                        `imgUrl`,
+                    </if>
+                    <if test="address!=null">
+                        `address`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="institutionName!=null">
+                    #{institutionName},
+                </if>
+                <if test="discription!=null">
+                    #{discription},
+                </if>
+                <if test="url!=null">
+                    #{url},
+                </if>
+                <if test="imgUrl!=null">
+                    #{imgUrl},
+                </if>
+                <if test="address!=null">
+                    #{address},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateInstitution">
+        UPDATE `Institution`
+        SET
+        <trim suffixOverrides=",">
+            <if test="discription != null and discription!=''">
+                `discription` = #{discription},
+            </if>
+            <if test="url != null and url!=''">
+                `url` = #{url},
+            </if>
+            <if test="imgUrl != null and imgUrl!=''">
+                `imgUrl` = #{imgUrl},
+            </if>
+            <if test="address != null and address!=''">
+                `address` = #{address},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `institutionName` = #{institutionName} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `Institution`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.discription != null and set.discription!=''">
+            `discription` = #{set.discription},
+        </if>
+        <if test="set.url != null and set.url!=''">
+            `url` = #{set.url},
+        </if>
+        <if test="set.imgUrl != null and set.imgUrl!=''">
+            `imgUrl` = #{set.imgUrl},
+        </if>
+        <if test="set.address != null and set.address!=''">
+            `address` = #{set.address},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.institutionNameList != null">
+                    `institutionName` in
+                    <foreach collection="where.institutionNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyInstitutionName!=null and where.fuzzyInstitutionName.size()>0">
+                (
+                <foreach collection="where.fuzzyInstitutionName"  separator="or" item="item">
+                    `InstitutionName` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyInstitutionName!=null and where.rightFuzzyInstitutionName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyInstitutionName"  separator="or" item="item">
+                    `InstitutionName` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.discriptionList != null">
+                    `discription` in
+                    <foreach collection="where.discriptionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDiscription!=null and where.fuzzyDiscription.size()>0">
+                (
+                <foreach collection="where.fuzzyDiscription"  separator="or" item="item">
+                    `Discription` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDiscription!=null and where.rightFuzzyDiscription.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDiscription"  separator="or" item="item">
+                    `Discription` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.urlList != null">
+                    `url` in
+                    <foreach collection="where.urlList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyUrl!=null and where.fuzzyUrl.size()>0">
+                (
+                <foreach collection="where.fuzzyUrl"  separator="or" item="item">
+                    `Url` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyUrl!=null and where.rightFuzzyUrl.size()>0">
+                (
+                <foreach collection="where.rightFuzzyUrl"  separator="or" item="item">
+                    `Url` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.imgUrlList != null">
+                    `imgUrl` in
+                    <foreach collection="where.imgUrlList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyImgUrl!=null and where.fuzzyImgUrl.size()>0">
+                (
+                <foreach collection="where.fuzzyImgUrl"  separator="or" item="item">
+                    `ImgUrl` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyImgUrl!=null and where.rightFuzzyImgUrl.size()>0">
+                (
+                <foreach collection="where.rightFuzzyImgUrl"  separator="or" item="item">
+                    `ImgUrl` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.addressList != null">
+                    `address` in
+                    <foreach collection="where.addressList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAddress!=null and where.fuzzyAddress.size()>0">
+                (
+                <foreach collection="where.fuzzyAddress"  separator="or" item="item">
+                    `Address` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAddress!=null and where.rightFuzzyAddress.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAddress"  separator="or" item="item">
+                    `Address` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="org.buaa.platform.entity.Institution" id="InstitutionMap">
+        <result property="institutionName" column="institutionName"/>
+        <result property="discription" column="discription"/>
+        <result property="url" column="url"/>
+        <result property="imgUrl" column="imgUrl"/>
+        <result property="address" column="address"/>
+    </resultMap>
+
+
+    <select id="queryInstitution" resultMap="InstitutionMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Institution`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="institutionName != null and institutionName!=''">
+                `institutionName` = #{institutionName} and
+            </if>
+            <if test="discription != null and discription!=''">
+                `discription` = #{discription} and
+            </if>
+            <if test="url != null and url!=''">
+                `url` = #{url} and
+            </if>
+            <if test="imgUrl != null and imgUrl!=''">
+                `imgUrl` = #{imgUrl} and
+            </if>
+            <if test="address != null and address!=''">
+                `address` = #{address} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Institution$QueryBuilder) == true">
+                <if test="institutionNameList != null">
+                    `institutionName` in
+                    <foreach collection="institutionNameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyInstitutionName!=null and fuzzyInstitutionName.size()>0">
+                    (
+                    <foreach collection="fuzzyInstitutionName"  separator="or" item="item">
+                        `InstitutionName` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyInstitutionName!=null and rightFuzzyInstitutionName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyInstitutionName"  separator="or" item="item">
+                        `InstitutionName` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="discriptionList != null">
+                    `discription` in
+                    <foreach collection="discriptionList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDiscription!=null and fuzzyDiscription.size()>0">
+                    (
+                    <foreach collection="fuzzyDiscription"  separator="or" item="item">
+                        `Discription` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDiscription!=null and rightFuzzyDiscription.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDiscription"  separator="or" item="item">
+                        `Discription` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="urlList != null">
+                    `url` in
+                    <foreach collection="urlList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyUrl!=null and fuzzyUrl.size()>0">
+                    (
+                    <foreach collection="fuzzyUrl"  separator="or" item="item">
+                        `Url` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUrl!=null and rightFuzzyUrl.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUrl"  separator="or" item="item">
+                        `Url` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="imgUrlList != null">
+                    `imgUrl` in
+                    <foreach collection="imgUrlList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyImgUrl!=null and fuzzyImgUrl.size()>0">
+                    (
+                    <foreach collection="fuzzyImgUrl"  separator="or" item="item">
+                        `ImgUrl` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImgUrl!=null and rightFuzzyImgUrl.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImgUrl"  separator="or" item="item">
+                        `ImgUrl` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="addressList != null">
+                    `address` in
+                    <foreach collection="addressList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAddress!=null and fuzzyAddress.size()>0">
+                    (
+                    <foreach collection="fuzzyAddress"  separator="or" item="item">
+                        `Address` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAddress!=null and rightFuzzyAddress.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAddress"  separator="or" item="item">
+                        `Address` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryInstitutionLimit1" resultMap="InstitutionMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Institution`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="institutionName != null and institutionName!=''">
+                `institutionName` = #{institutionName} and
+            </if>
+            <if test="discription != null and discription!=''">
+                `discription` = #{discription} and
+            </if>
+            <if test="url != null and url!=''">
+                `url` = #{url} and
+            </if>
+            <if test="imgUrl != null and imgUrl!=''">
+                `imgUrl` = #{imgUrl} and
+            </if>
+            <if test="address != null and address!=''">
+                `address` = #{address} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Institution$QueryBuilder) == true">
+                    <if test="institutionNameList != null">
+                        `institutionName` in
+                        <foreach collection="institutionNameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyInstitutionName!=null and fuzzyInstitutionName.size()>0">
+                    (
+                    <foreach collection="fuzzyInstitutionName"  separator="or" item="item">
+                        `InstitutionName` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyInstitutionName!=null and rightFuzzyInstitutionName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyInstitutionName"  separator="or" item="item">
+                        `InstitutionName` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="discriptionList != null">
+                        `discription` in
+                        <foreach collection="discriptionList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDiscription!=null and fuzzyDiscription.size()>0">
+                    (
+                    <foreach collection="fuzzyDiscription"  separator="or" item="item">
+                        `Discription` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDiscription!=null and rightFuzzyDiscription.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDiscription"  separator="or" item="item">
+                        `Discription` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="urlList != null">
+                        `url` in
+                        <foreach collection="urlList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyUrl!=null and fuzzyUrl.size()>0">
+                    (
+                    <foreach collection="fuzzyUrl"  separator="or" item="item">
+                        `Url` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUrl!=null and rightFuzzyUrl.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUrl"  separator="or" item="item">
+                        `Url` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="imgUrlList != null">
+                        `imgUrl` in
+                        <foreach collection="imgUrlList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyImgUrl!=null and fuzzyImgUrl.size()>0">
+                    (
+                    <foreach collection="fuzzyImgUrl"  separator="or" item="item">
+                        `ImgUrl` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyImgUrl!=null and rightFuzzyImgUrl.size()>0">
+                    (
+                    <foreach collection="rightFuzzyImgUrl"  separator="or" item="item">
+                        `ImgUrl` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="addressList != null">
+                        `address` in
+                        <foreach collection="addressList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAddress!=null and fuzzyAddress.size()>0">
+                    (
+                    <foreach collection="fuzzyAddress"  separator="or" item="item">
+                        `Address` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAddress!=null and rightFuzzyAddress.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAddress"  separator="or" item="item">
+                        `Address` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `institutionName`,
+        `discription`,
+        `url`,
+        `imgUrl`,
+        `address`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Institution$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.institutionName==true">
+                        `institutionName`,
+                    </if>
+                    <if test="fetchFields.fetchFields.discription==true">
+                        `discription`,
+                    </if>
+                    <if test="fetchFields.fetchFields.url==true">
+                        `url`,
+                    </if>
+                    <if test="fetchFields.fetchFields.imgUrl==true">
+                        `imgUrl`,
+                    </if>
+                    <if test="fetchFields.fetchFields.address==true">
+                        `address`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.institutionName==null">
+                        `institutionName`,
+                    </if>
+                    <if test="fetchFields.excludeFields.discription==null">
+                        `discription`,
+                    </if>
+                    <if test="fetchFields.excludeFields.url==null">
+                        `url`,
+                    </if>
+                    <if test="fetchFields.excludeFields.imgUrl==null">
+                        `imgUrl`,
+                    </if>
+                    <if test="fetchFields.excludeFields.address==null">
+                        `address`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof org.buaa.platform.entity.Institution$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

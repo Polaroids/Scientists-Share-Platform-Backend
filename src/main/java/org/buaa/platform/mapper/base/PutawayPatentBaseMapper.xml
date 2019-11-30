@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buaa.platform.mapper.base.PutawayPatentBaseMapper">
+
+
+    <insert id="insertPutawayPatent" >
+        INSERT INTO `PutawayPatent`
+        (
+        <trim suffixOverrides=",">
+                    <if test="putawayID!=null">
+                        `putawayID`,
+                    </if>
+                    <if test="userID!=null">
+                        `userID`,
+                    </if>
+                    <if test="patentID!=null">
+                        `patentID`,
+                    </if>
+                    <if test="time!=null">
+                        `time`,
+                    </if>
+                    <if test="contact!=null">
+                        `contact`,
+                    </if>
+                    <if test="status!=null">
+                        `status`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="putawayID!=null">
+                    #{putawayID},
+                </if>
+                <if test="userID!=null">
+                    #{userID},
+                </if>
+                <if test="patentID!=null">
+                    #{patentID},
+                </if>
+                <if test="time!=null">
+                    #{time},
+                </if>
+                <if test="contact!=null">
+                    #{contact},
+                </if>
+                <if test="status!=null">
+                    #{status},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updatePutawayPatent">
+        UPDATE `PutawayPatent`
+        SET
+        <trim suffixOverrides=",">
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID},
+            </if>
+            <if test="patentID != null and patentID!=''">
+                `patentID` = #{patentID},
+            </if>
+            <if test="time != null and time!=''">
+                `time` = #{time},
+            </if>
+            <if test="contact != null and contact!=''">
+                `contact` = #{contact},
+            </if>
+            <if test="status != null and status!=''">
+                `status` = #{status},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `putawayID` = #{putawayID} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `PutawayPatent`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.userID != null and set.userID!=''">
+            `userID` = #{set.userID},
+        </if>
+        <if test="set.patentID != null and set.patentID!=''">
+            `patentID` = #{set.patentID},
+        </if>
+        <if test="set.time != null and set.time!=''">
+            `time` = #{set.time},
+        </if>
+        <if test="set.contact != null and set.contact!=''">
+            `contact` = #{set.contact},
+        </if>
+        <if test="set.status != null and set.status!=''">
+            `status` = #{set.status},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.putawayIDList != null">
+                    `putawayID` in
+                    <foreach collection="where.putawayIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyPutawayID!=null and where.fuzzyPutawayID.size()>0">
+                (
+                <foreach collection="where.fuzzyPutawayID"  separator="or" item="item">
+                    `PutawayID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyPutawayID!=null and where.rightFuzzyPutawayID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyPutawayID"  separator="or" item="item">
+                    `PutawayID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.userIDList != null">
+                    `userID` in
+                    <foreach collection="where.userIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyUserID!=null and where.fuzzyUserID.size()>0">
+                (
+                <foreach collection="where.fuzzyUserID"  separator="or" item="item">
+                    `UserID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyUserID!=null and where.rightFuzzyUserID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyUserID"  separator="or" item="item">
+                    `UserID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.patentIDList != null">
+                    `patentID` in
+                    <foreach collection="where.patentIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyPatentID!=null and where.fuzzyPatentID.size()>0">
+                (
+                <foreach collection="where.fuzzyPatentID"  separator="or" item="item">
+                    `PatentID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyPatentID!=null and where.rightFuzzyPatentID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyPatentID"  separator="or" item="item">
+                    `PatentID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.timeList != null">
+                    `time` in
+                    <foreach collection="where.timeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTime!=null and where.fuzzyTime.size()>0">
+                (
+                <foreach collection="where.fuzzyTime"  separator="or" item="item">
+                    `Time` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTime!=null and where.rightFuzzyTime.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTime"  separator="or" item="item">
+                    `Time` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.contactList != null">
+                    `contact` in
+                    <foreach collection="where.contactList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyContact!=null and where.fuzzyContact.size()>0">
+                (
+                <foreach collection="where.fuzzyContact"  separator="or" item="item">
+                    `Contact` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyContact!=null and where.rightFuzzyContact.size()>0">
+                (
+                <foreach collection="where.rightFuzzyContact"  separator="or" item="item">
+                    `Contact` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.statusList != null">
+                    `status` in
+                    <foreach collection="where.statusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyStatus!=null and where.fuzzyStatus.size()>0">
+                (
+                <foreach collection="where.fuzzyStatus"  separator="or" item="item">
+                    `Status` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyStatus!=null and where.rightFuzzyStatus.size()>0">
+                (
+                <foreach collection="where.rightFuzzyStatus"  separator="or" item="item">
+                    `Status` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="org.buaa.platform.entity.PutawayPatent" id="PutawayPatentMap">
+        <result property="putawayID" column="putawayID"/>
+        <result property="userID" column="userID"/>
+        <result property="patentID" column="patentID"/>
+        <result property="time" column="time"/>
+        <result property="contact" column="contact"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+
+    <select id="queryPutawayPatent" resultMap="PutawayPatentMap">
+        select
+        <include refid="baseResult"></include>
+        from  `PutawayPatent`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="putawayID != null and putawayID!=''">
+                `putawayID` = #{putawayID} and
+            </if>
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID} and
+            </if>
+            <if test="patentID != null and patentID!=''">
+                `patentID` = #{patentID} and
+            </if>
+            <if test="time != null and time!=''">
+                `time` = #{time} and
+            </if>
+            <if test="contact != null and contact!=''">
+                `contact` = #{contact} and
+            </if>
+            <if test="status != null and status!=''">
+                `status` = #{status} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.PutawayPatent$QueryBuilder) == true">
+                <if test="putawayIDList != null">
+                    `putawayID` in
+                    <foreach collection="putawayIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPutawayID!=null and fuzzyPutawayID.size()>0">
+                    (
+                    <foreach collection="fuzzyPutawayID"  separator="or" item="item">
+                        `PutawayID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPutawayID!=null and rightFuzzyPutawayID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPutawayID"  separator="or" item="item">
+                        `PutawayID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="userIDList != null">
+                    `userID` in
+                    <foreach collection="userIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyUserID!=null and fuzzyUserID.size()>0">
+                    (
+                    <foreach collection="fuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserID!=null and rightFuzzyUserID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="patentIDList != null">
+                    `patentID` in
+                    <foreach collection="patentIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPatentID!=null and fuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="fuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPatentID!=null and rightFuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="timeList != null">
+                    `time` in
+                    <foreach collection="timeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTime!=null and fuzzyTime.size()>0">
+                    (
+                    <foreach collection="fuzzyTime"  separator="or" item="item">
+                        `Time` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTime!=null and rightFuzzyTime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTime"  separator="or" item="item">
+                        `Time` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="contactList != null">
+                    `contact` in
+                    <foreach collection="contactList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyContact!=null and fuzzyContact.size()>0">
+                    (
+                    <foreach collection="fuzzyContact"  separator="or" item="item">
+                        `Contact` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyContact!=null and rightFuzzyContact.size()>0">
+                    (
+                    <foreach collection="rightFuzzyContact"  separator="or" item="item">
+                        `Contact` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="statusList != null">
+                    `status` in
+                    <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyStatus!=null and fuzzyStatus.size()>0">
+                    (
+                    <foreach collection="fuzzyStatus"  separator="or" item="item">
+                        `Status` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyStatus!=null and rightFuzzyStatus.size()>0">
+                    (
+                    <foreach collection="rightFuzzyStatus"  separator="or" item="item">
+                        `Status` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryPutawayPatentLimit1" resultMap="PutawayPatentMap">
+        select
+        <include refid="baseResult"></include>
+        from  `PutawayPatent`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="putawayID != null and putawayID!=''">
+                `putawayID` = #{putawayID} and
+            </if>
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID} and
+            </if>
+            <if test="patentID != null and patentID!=''">
+                `patentID` = #{patentID} and
+            </if>
+            <if test="time != null and time!=''">
+                `time` = #{time} and
+            </if>
+            <if test="contact != null and contact!=''">
+                `contact` = #{contact} and
+            </if>
+            <if test="status != null and status!=''">
+                `status` = #{status} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.PutawayPatent$QueryBuilder) == true">
+                    <if test="putawayIDList != null">
+                        `putawayID` in
+                        <foreach collection="putawayIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPutawayID!=null and fuzzyPutawayID.size()>0">
+                    (
+                    <foreach collection="fuzzyPutawayID"  separator="or" item="item">
+                        `PutawayID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPutawayID!=null and rightFuzzyPutawayID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPutawayID"  separator="or" item="item">
+                        `PutawayID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="userIDList != null">
+                        `userID` in
+                        <foreach collection="userIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyUserID!=null and fuzzyUserID.size()>0">
+                    (
+                    <foreach collection="fuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserID!=null and rightFuzzyUserID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="patentIDList != null">
+                        `patentID` in
+                        <foreach collection="patentIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPatentID!=null and fuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="fuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPatentID!=null and rightFuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="timeList != null">
+                        `time` in
+                        <foreach collection="timeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTime!=null and fuzzyTime.size()>0">
+                    (
+                    <foreach collection="fuzzyTime"  separator="or" item="item">
+                        `Time` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTime!=null and rightFuzzyTime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTime"  separator="or" item="item">
+                        `Time` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="contactList != null">
+                        `contact` in
+                        <foreach collection="contactList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyContact!=null and fuzzyContact.size()>0">
+                    (
+                    <foreach collection="fuzzyContact"  separator="or" item="item">
+                        `Contact` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyContact!=null and rightFuzzyContact.size()>0">
+                    (
+                    <foreach collection="rightFuzzyContact"  separator="or" item="item">
+                        `Contact` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="statusList != null">
+                        `status` in
+                        <foreach collection="statusList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyStatus!=null and fuzzyStatus.size()>0">
+                    (
+                    <foreach collection="fuzzyStatus"  separator="or" item="item">
+                        `Status` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyStatus!=null and rightFuzzyStatus.size()>0">
+                    (
+                    <foreach collection="rightFuzzyStatus"  separator="or" item="item">
+                        `Status` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `putawayID`,
+        `userID`,
+        `patentID`,
+        `time`,
+        `contact`,
+        `status`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof org.buaa.platform.entity.PutawayPatent$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.putawayID==true">
+                        `putawayID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.userID==true">
+                        `userID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.patentID==true">
+                        `patentID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.time==true">
+                        `time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.contact==true">
+                        `contact`,
+                    </if>
+                    <if test="fetchFields.fetchFields.status==true">
+                        `status`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.putawayID==null">
+                        `putawayID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.userID==null">
+                        `userID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.patentID==null">
+                        `patentID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.time==null">
+                        `time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.contact==null">
+                        `contact`,
+                    </if>
+                    <if test="fetchFields.excludeFields.status==null">
+                        `status`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof org.buaa.platform.entity.PutawayPatent$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

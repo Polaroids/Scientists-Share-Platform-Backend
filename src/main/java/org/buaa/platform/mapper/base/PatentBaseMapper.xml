@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buaa.platform.mapper.base.PatentBaseMapper">
+
+
+    <insert id="insertPatent" >
+        INSERT INTO `Patent`
+        (
+        <trim suffixOverrides=",">
+                    <if test="patentID!=null">
+                        `patentID`,
+                    </if>
+                    <if test="abstract!=null">
+                        `abstract`,
+                    </if>
+                    <if test="applicant!=null">
+                        `applicant`,
+                    </if>
+                    <if test="address!=null">
+                        `address`,
+                    </if>
+                    <if test="classCode!=null">
+                        `classCode`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="patentID!=null">
+                    #{patentID},
+                </if>
+                <if test="abstract!=null">
+                    #{abstract},
+                </if>
+                <if test="applicant!=null">
+                    #{applicant},
+                </if>
+                <if test="address!=null">
+                    #{address},
+                </if>
+                <if test="classCode!=null">
+                    #{classCode},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updatePatent">
+        UPDATE `Patent`
+        SET
+        <trim suffixOverrides=",">
+            <if test="abstract != null and abstract!=''">
+                `abstract` = #{abstract},
+            </if>
+            <if test="applicant != null and applicant!=''">
+                `applicant` = #{applicant},
+            </if>
+            <if test="address != null and address!=''">
+                `address` = #{address},
+            </if>
+            <if test="classCode != null and classCode!=''">
+                `classCode` = #{classCode},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `patentID` = #{patentID} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `Patent`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.abstract != null and set.abstract!=''">
+            `abstract` = #{set.abstract},
+        </if>
+        <if test="set.applicant != null and set.applicant!=''">
+            `applicant` = #{set.applicant},
+        </if>
+        <if test="set.address != null and set.address!=''">
+            `address` = #{set.address},
+        </if>
+        <if test="set.classCode != null and set.classCode!=''">
+            `classCode` = #{set.classCode},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.patentIDList != null">
+                    `patentID` in
+                    <foreach collection="where.patentIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyPatentID!=null and where.fuzzyPatentID.size()>0">
+                (
+                <foreach collection="where.fuzzyPatentID"  separator="or" item="item">
+                    `PatentID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyPatentID!=null and where.rightFuzzyPatentID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyPatentID"  separator="or" item="item">
+                    `PatentID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.abstractList != null">
+                    `abstract` in
+                    <foreach collection="where.abstractList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAbstract!=null and where.fuzzyAbstract.size()>0">
+                (
+                <foreach collection="where.fuzzyAbstract"  separator="or" item="item">
+                    `Abstract` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAbstract!=null and where.rightFuzzyAbstract.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAbstract"  separator="or" item="item">
+                    `Abstract` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.applicantList != null">
+                    `applicant` in
+                    <foreach collection="where.applicantList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyApplicant!=null and where.fuzzyApplicant.size()>0">
+                (
+                <foreach collection="where.fuzzyApplicant"  separator="or" item="item">
+                    `Applicant` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyApplicant!=null and where.rightFuzzyApplicant.size()>0">
+                (
+                <foreach collection="where.rightFuzzyApplicant"  separator="or" item="item">
+                    `Applicant` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.addressList != null">
+                    `address` in
+                    <foreach collection="where.addressList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAddress!=null and where.fuzzyAddress.size()>0">
+                (
+                <foreach collection="where.fuzzyAddress"  separator="or" item="item">
+                    `Address` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAddress!=null and where.rightFuzzyAddress.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAddress"  separator="or" item="item">
+                    `Address` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.classCodeList != null">
+                    `classCode` in
+                    <foreach collection="where.classCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyClassCode!=null and where.fuzzyClassCode.size()>0">
+                (
+                <foreach collection="where.fuzzyClassCode"  separator="or" item="item">
+                    `ClassCode` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyClassCode!=null and where.rightFuzzyClassCode.size()>0">
+                (
+                <foreach collection="where.rightFuzzyClassCode"  separator="or" item="item">
+                    `ClassCode` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="org.buaa.platform.entity.Patent" id="PatentMap">
+        <result property="patentID" column="patentID"/>
+        <result property="abstract" column="abstract"/>
+        <result property="applicant" column="applicant"/>
+        <result property="address" column="address"/>
+        <result property="classCode" column="classCode"/>
+    </resultMap>
+
+
+    <select id="queryPatent" resultMap="PatentMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Patent`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="patentID != null and patentID!=''">
+                `patentID` = #{patentID} and
+            </if>
+            <if test="abstract != null and abstract!=''">
+                `abstract` = #{abstract} and
+            </if>
+            <if test="applicant != null and applicant!=''">
+                `applicant` = #{applicant} and
+            </if>
+            <if test="address != null and address!=''">
+                `address` = #{address} and
+            </if>
+            <if test="classCode != null and classCode!=''">
+                `classCode` = #{classCode} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Patent$QueryBuilder) == true">
+                <if test="patentIDList != null">
+                    `patentID` in
+                    <foreach collection="patentIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPatentID!=null and fuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="fuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPatentID!=null and rightFuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="abstractList != null">
+                    `abstract` in
+                    <foreach collection="abstractList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAbstract!=null and fuzzyAbstract.size()>0">
+                    (
+                    <foreach collection="fuzzyAbstract"  separator="or" item="item">
+                        `Abstract` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAbstract!=null and rightFuzzyAbstract.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAbstract"  separator="or" item="item">
+                        `Abstract` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="applicantList != null">
+                    `applicant` in
+                    <foreach collection="applicantList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyApplicant!=null and fuzzyApplicant.size()>0">
+                    (
+                    <foreach collection="fuzzyApplicant"  separator="or" item="item">
+                        `Applicant` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyApplicant!=null and rightFuzzyApplicant.size()>0">
+                    (
+                    <foreach collection="rightFuzzyApplicant"  separator="or" item="item">
+                        `Applicant` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="addressList != null">
+                    `address` in
+                    <foreach collection="addressList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAddress!=null and fuzzyAddress.size()>0">
+                    (
+                    <foreach collection="fuzzyAddress"  separator="or" item="item">
+                        `Address` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAddress!=null and rightFuzzyAddress.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAddress"  separator="or" item="item">
+                        `Address` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="classCodeList != null">
+                    `classCode` in
+                    <foreach collection="classCodeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyClassCode!=null and fuzzyClassCode.size()>0">
+                    (
+                    <foreach collection="fuzzyClassCode"  separator="or" item="item">
+                        `ClassCode` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyClassCode!=null and rightFuzzyClassCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyClassCode"  separator="or" item="item">
+                        `ClassCode` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryPatentLimit1" resultMap="PatentMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Patent`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="patentID != null and patentID!=''">
+                `patentID` = #{patentID} and
+            </if>
+            <if test="abstract != null and abstract!=''">
+                `abstract` = #{abstract} and
+            </if>
+            <if test="applicant != null and applicant!=''">
+                `applicant` = #{applicant} and
+            </if>
+            <if test="address != null and address!=''">
+                `address` = #{address} and
+            </if>
+            <if test="classCode != null and classCode!=''">
+                `classCode` = #{classCode} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Patent$QueryBuilder) == true">
+                    <if test="patentIDList != null">
+                        `patentID` in
+                        <foreach collection="patentIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPatentID!=null and fuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="fuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPatentID!=null and rightFuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="abstractList != null">
+                        `abstract` in
+                        <foreach collection="abstractList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAbstract!=null and fuzzyAbstract.size()>0">
+                    (
+                    <foreach collection="fuzzyAbstract"  separator="or" item="item">
+                        `Abstract` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAbstract!=null and rightFuzzyAbstract.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAbstract"  separator="or" item="item">
+                        `Abstract` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="applicantList != null">
+                        `applicant` in
+                        <foreach collection="applicantList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyApplicant!=null and fuzzyApplicant.size()>0">
+                    (
+                    <foreach collection="fuzzyApplicant"  separator="or" item="item">
+                        `Applicant` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyApplicant!=null and rightFuzzyApplicant.size()>0">
+                    (
+                    <foreach collection="rightFuzzyApplicant"  separator="or" item="item">
+                        `Applicant` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="addressList != null">
+                        `address` in
+                        <foreach collection="addressList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAddress!=null and fuzzyAddress.size()>0">
+                    (
+                    <foreach collection="fuzzyAddress"  separator="or" item="item">
+                        `Address` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAddress!=null and rightFuzzyAddress.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAddress"  separator="or" item="item">
+                        `Address` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="classCodeList != null">
+                        `classCode` in
+                        <foreach collection="classCodeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyClassCode!=null and fuzzyClassCode.size()>0">
+                    (
+                    <foreach collection="fuzzyClassCode"  separator="or" item="item">
+                        `ClassCode` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyClassCode!=null and rightFuzzyClassCode.size()>0">
+                    (
+                    <foreach collection="rightFuzzyClassCode"  separator="or" item="item">
+                        `ClassCode` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `patentID`,
+        `abstract`,
+        `applicant`,
+        `address`,
+        `classCode`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Patent$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.patentID==true">
+                        `patentID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.abstract==true">
+                        `abstract`,
+                    </if>
+                    <if test="fetchFields.fetchFields.applicant==true">
+                        `applicant`,
+                    </if>
+                    <if test="fetchFields.fetchFields.address==true">
+                        `address`,
+                    </if>
+                    <if test="fetchFields.fetchFields.classCode==true">
+                        `classCode`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.patentID==null">
+                        `patentID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.abstract==null">
+                        `abstract`,
+                    </if>
+                    <if test="fetchFields.excludeFields.applicant==null">
+                        `applicant`,
+                    </if>
+                    <if test="fetchFields.excludeFields.address==null">
+                        `address`,
+                    </if>
+                    <if test="fetchFields.excludeFields.classCode==null">
+                        `classCode`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof org.buaa.platform.entity.Patent$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buaa.platform.mapper.base.PaperBaseMapper">
+
+
+    <insert id="insertPaper" >
+        INSERT INTO `Paper`
+        (
+        <trim suffixOverrides=",">
+                    <if test="paperID!=null">
+                        `paperID`,
+                    </if>
+                    <if test="title!=null">
+                        `title`,
+                    </if>
+                    <if test="abstract!=null">
+                        `abstract`,
+                    </if>
+                    <if test="keyword!=null">
+                        `keyword`,
+                    </if>
+                    <if test="classificationCodes!=null">
+                        `classificationCodes`,
+                    </if>
+                    <if test="DOI!=null">
+                        `DOI`,
+                    </if>
+                    <if test="publishTime!=null">
+                        `publishTime`,
+                    </if>
+                    <if test="funds!=null">
+                        `funds`,
+                    </if>
+                    <if test="content!=null">
+                        `content`,
+                    </if>
+                    <if test="sorce!=null">
+                        `sorce`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="paperID!=null">
+                    #{paperID},
+                </if>
+                <if test="title!=null">
+                    #{title},
+                </if>
+                <if test="abstract!=null">
+                    #{abstract},
+                </if>
+                <if test="keyword!=null">
+                    #{keyword},
+                </if>
+                <if test="classificationCodes!=null">
+                    #{classificationCodes},
+                </if>
+                <if test="DOI!=null">
+                    #{DOI},
+                </if>
+                <if test="publishTime!=null">
+                    #{publishTime},
+                </if>
+                <if test="funds!=null">
+                    #{funds},
+                </if>
+                <if test="content!=null">
+                    #{content},
+                </if>
+                <if test="sorce!=null">
+                    #{sorce},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updatePaper">
+        UPDATE `Paper`
+        SET
+        <trim suffixOverrides=",">
+            <if test="title != null and title!=''">
+                `title` = #{title},
+            </if>
+            <if test="abstract != null and abstract!=''">
+                `abstract` = #{abstract},
+            </if>
+            <if test="keyword != null and keyword!=''">
+                `keyword` = #{keyword},
+            </if>
+            <if test="classificationCodes != null and classificationCodes!=''">
+                `classificationCodes` = #{classificationCodes},
+            </if>
+            <if test="DOI != null and DOI!=''">
+                `DOI` = #{DOI},
+            </if>
+            <if test="publishTime != null and publishTime!=''">
+                `publishTime` = #{publishTime},
+            </if>
+            <if test="funds != null and funds!=''">
+                `funds` = #{funds},
+            </if>
+            <if test="content != null and content!=''">
+                `content` = #{content},
+            </if>
+            <if test="sorce != null and sorce!=''">
+                `sorce` = #{sorce},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `paperID` = #{paperID} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `Paper`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.title != null and set.title!=''">
+            `title` = #{set.title},
+        </if>
+        <if test="set.abstract != null and set.abstract!=''">
+            `abstract` = #{set.abstract},
+        </if>
+        <if test="set.keyword != null and set.keyword!=''">
+            `keyword` = #{set.keyword},
+        </if>
+        <if test="set.classificationCodes != null and set.classificationCodes!=''">
+            `classificationCodes` = #{set.classificationCodes},
+        </if>
+        <if test="set.DOI != null and set.DOI!=''">
+            `DOI` = #{set.DOI},
+        </if>
+        <if test="set.publishTime != null and set.publishTime!=''">
+            `publishTime` = #{set.publishTime},
+        </if>
+        <if test="set.funds != null and set.funds!=''">
+            `funds` = #{set.funds},
+        </if>
+        <if test="set.content != null and set.content!=''">
+            `content` = #{set.content},
+        </if>
+        <if test="set.sorce != null and set.sorce!=''">
+            `sorce` = #{set.sorce},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.paperIDList != null">
+                    `paperID` in
+                    <foreach collection="where.paperIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyPaperID!=null and where.fuzzyPaperID.size()>0">
+                (
+                <foreach collection="where.fuzzyPaperID"  separator="or" item="item">
+                    `PaperID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyPaperID!=null and where.rightFuzzyPaperID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyPaperID"  separator="or" item="item">
+                    `PaperID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.titleList != null">
+                    `title` in
+                    <foreach collection="where.titleList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyTitle!=null and where.fuzzyTitle.size()>0">
+                (
+                <foreach collection="where.fuzzyTitle"  separator="or" item="item">
+                    `Title` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyTitle!=null and where.rightFuzzyTitle.size()>0">
+                (
+                <foreach collection="where.rightFuzzyTitle"  separator="or" item="item">
+                    `Title` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.abstractList != null">
+                    `abstract` in
+                    <foreach collection="where.abstractList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAbstract!=null and where.fuzzyAbstract.size()>0">
+                (
+                <foreach collection="where.fuzzyAbstract"  separator="or" item="item">
+                    `Abstract` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAbstract!=null and where.rightFuzzyAbstract.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAbstract"  separator="or" item="item">
+                    `Abstract` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.keywordList != null">
+                    `keyword` in
+                    <foreach collection="where.keywordList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyKeyword!=null and where.fuzzyKeyword.size()>0">
+                (
+                <foreach collection="where.fuzzyKeyword"  separator="or" item="item">
+                    `Keyword` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyKeyword!=null and where.rightFuzzyKeyword.size()>0">
+                (
+                <foreach collection="where.rightFuzzyKeyword"  separator="or" item="item">
+                    `Keyword` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.classificationCodesList != null">
+                    `classificationCodes` in
+                    <foreach collection="where.classificationCodesList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyClassificationCodes!=null and where.fuzzyClassificationCodes.size()>0">
+                (
+                <foreach collection="where.fuzzyClassificationCodes"  separator="or" item="item">
+                    `ClassificationCodes` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyClassificationCodes!=null and where.rightFuzzyClassificationCodes.size()>0">
+                (
+                <foreach collection="where.rightFuzzyClassificationCodes"  separator="or" item="item">
+                    `ClassificationCodes` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.DOIList != null">
+                    `DOI` in
+                    <foreach collection="where.DOIList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyDOI!=null and where.fuzzyDOI.size()>0">
+                (
+                <foreach collection="where.fuzzyDOI"  separator="or" item="item">
+                    `DOI` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyDOI!=null and where.rightFuzzyDOI.size()>0">
+                (
+                <foreach collection="where.rightFuzzyDOI"  separator="or" item="item">
+                    `DOI` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.publishTimeList != null">
+                    `publishTime` in
+                    <foreach collection="where.publishTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyPublishTime!=null and where.fuzzyPublishTime.size()>0">
+                (
+                <foreach collection="where.fuzzyPublishTime"  separator="or" item="item">
+                    `PublishTime` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyPublishTime!=null and where.rightFuzzyPublishTime.size()>0">
+                (
+                <foreach collection="where.rightFuzzyPublishTime"  separator="or" item="item">
+                    `PublishTime` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.fundsList != null">
+                    `funds` in
+                    <foreach collection="where.fundsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFunds!=null and where.fuzzyFunds.size()>0">
+                (
+                <foreach collection="where.fuzzyFunds"  separator="or" item="item">
+                    `Funds` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFunds!=null and where.rightFuzzyFunds.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFunds"  separator="or" item="item">
+                    `Funds` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.contentList != null">
+                    `content` in
+                    <foreach collection="where.contentList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyContent!=null and where.fuzzyContent.size()>0">
+                (
+                <foreach collection="where.fuzzyContent"  separator="or" item="item">
+                    `Content` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyContent!=null and where.rightFuzzyContent.size()>0">
+                (
+                <foreach collection="where.rightFuzzyContent"  separator="or" item="item">
+                    `Content` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.sorceList != null">
+                    `sorce` in
+                    <foreach collection="where.sorceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzySorce!=null and where.fuzzySorce.size()>0">
+                (
+                <foreach collection="where.fuzzySorce"  separator="or" item="item">
+                    `Sorce` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzySorce!=null and where.rightFuzzySorce.size()>0">
+                (
+                <foreach collection="where.rightFuzzySorce"  separator="or" item="item">
+                    `Sorce` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="org.buaa.platform.entity.Paper" id="PaperMap">
+        <result property="paperID" column="paperID"/>
+        <result property="title" column="title"/>
+        <result property="abstract" column="abstract"/>
+        <result property="keyword" column="keyword"/>
+        <result property="classificationCodes" column="classificationCodes"/>
+        <result property="DOI" column="DOI"/>
+        <result property="publishTime" column="publishTime"/>
+        <result property="funds" column="funds"/>
+        <result property="content" column="content"/>
+        <result property="sorce" column="sorce"/>
+    </resultMap>
+
+
+    <select id="queryPaper" resultMap="PaperMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Paper`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="paperID != null and paperID!=''">
+                `paperID` = #{paperID} and
+            </if>
+            <if test="title != null and title!=''">
+                `title` = #{title} and
+            </if>
+            <if test="abstract != null and abstract!=''">
+                `abstract` = #{abstract} and
+            </if>
+            <if test="keyword != null and keyword!=''">
+                `keyword` = #{keyword} and
+            </if>
+            <if test="classificationCodes != null and classificationCodes!=''">
+                `classificationCodes` = #{classificationCodes} and
+            </if>
+            <if test="DOI != null and DOI!=''">
+                `DOI` = #{DOI} and
+            </if>
+            <if test="publishTime != null and publishTime!=''">
+                `publishTime` = #{publishTime} and
+            </if>
+            <if test="funds != null and funds!=''">
+                `funds` = #{funds} and
+            </if>
+            <if test="content != null and content!=''">
+                `content` = #{content} and
+            </if>
+            <if test="sorce != null and sorce!=''">
+                `sorce` = #{sorce} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Paper$QueryBuilder) == true">
+                <if test="paperIDList != null">
+                    `paperID` in
+                    <foreach collection="paperIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPaperID!=null and fuzzyPaperID.size()>0">
+                    (
+                    <foreach collection="fuzzyPaperID"  separator="or" item="item">
+                        `PaperID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPaperID!=null and rightFuzzyPaperID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPaperID"  separator="or" item="item">
+                        `PaperID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="titleList != null">
+                    `title` in
+                    <foreach collection="titleList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyTitle!=null and fuzzyTitle.size()>0">
+                    (
+                    <foreach collection="fuzzyTitle"  separator="or" item="item">
+                        `Title` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTitle!=null and rightFuzzyTitle.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTitle"  separator="or" item="item">
+                        `Title` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="abstractList != null">
+                    `abstract` in
+                    <foreach collection="abstractList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAbstract!=null and fuzzyAbstract.size()>0">
+                    (
+                    <foreach collection="fuzzyAbstract"  separator="or" item="item">
+                        `Abstract` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAbstract!=null and rightFuzzyAbstract.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAbstract"  separator="or" item="item">
+                        `Abstract` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="keywordList != null">
+                    `keyword` in
+                    <foreach collection="keywordList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyKeyword!=null and fuzzyKeyword.size()>0">
+                    (
+                    <foreach collection="fuzzyKeyword"  separator="or" item="item">
+                        `Keyword` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyKeyword!=null and rightFuzzyKeyword.size()>0">
+                    (
+                    <foreach collection="rightFuzzyKeyword"  separator="or" item="item">
+                        `Keyword` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="classificationCodesList != null">
+                    `classificationCodes` in
+                    <foreach collection="classificationCodesList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyClassificationCodes!=null and fuzzyClassificationCodes.size()>0">
+                    (
+                    <foreach collection="fuzzyClassificationCodes"  separator="or" item="item">
+                        `ClassificationCodes` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyClassificationCodes!=null and rightFuzzyClassificationCodes.size()>0">
+                    (
+                    <foreach collection="rightFuzzyClassificationCodes"  separator="or" item="item">
+                        `ClassificationCodes` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="DOIList != null">
+                    `DOI` in
+                    <foreach collection="DOIList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyDOI!=null and fuzzyDOI.size()>0">
+                    (
+                    <foreach collection="fuzzyDOI"  separator="or" item="item">
+                        `DOI` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDOI!=null and rightFuzzyDOI.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDOI"  separator="or" item="item">
+                        `DOI` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="publishTimeList != null">
+                    `publishTime` in
+                    <foreach collection="publishTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPublishTime!=null and fuzzyPublishTime.size()>0">
+                    (
+                    <foreach collection="fuzzyPublishTime"  separator="or" item="item">
+                        `PublishTime` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPublishTime!=null and rightFuzzyPublishTime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPublishTime"  separator="or" item="item">
+                        `PublishTime` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="fundsList != null">
+                    `funds` in
+                    <foreach collection="fundsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFunds!=null and fuzzyFunds.size()>0">
+                    (
+                    <foreach collection="fuzzyFunds"  separator="or" item="item">
+                        `Funds` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFunds!=null and rightFuzzyFunds.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFunds"  separator="or" item="item">
+                        `Funds` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="contentList != null">
+                    `content` in
+                    <foreach collection="contentList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyContent!=null and fuzzyContent.size()>0">
+                    (
+                    <foreach collection="fuzzyContent"  separator="or" item="item">
+                        `Content` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyContent!=null and rightFuzzyContent.size()>0">
+                    (
+                    <foreach collection="rightFuzzyContent"  separator="or" item="item">
+                        `Content` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="sorceList != null">
+                    `sorce` in
+                    <foreach collection="sorceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySorce!=null and fuzzySorce.size()>0">
+                    (
+                    <foreach collection="fuzzySorce"  separator="or" item="item">
+                        `Sorce` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySorce!=null and rightFuzzySorce.size()>0">
+                    (
+                    <foreach collection="rightFuzzySorce"  separator="or" item="item">
+                        `Sorce` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryPaperLimit1" resultMap="PaperMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Paper`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="paperID != null and paperID!=''">
+                `paperID` = #{paperID} and
+            </if>
+            <if test="title != null and title!=''">
+                `title` = #{title} and
+            </if>
+            <if test="abstract != null and abstract!=''">
+                `abstract` = #{abstract} and
+            </if>
+            <if test="keyword != null and keyword!=''">
+                `keyword` = #{keyword} and
+            </if>
+            <if test="classificationCodes != null and classificationCodes!=''">
+                `classificationCodes` = #{classificationCodes} and
+            </if>
+            <if test="DOI != null and DOI!=''">
+                `DOI` = #{DOI} and
+            </if>
+            <if test="publishTime != null and publishTime!=''">
+                `publishTime` = #{publishTime} and
+            </if>
+            <if test="funds != null and funds!=''">
+                `funds` = #{funds} and
+            </if>
+            <if test="content != null and content!=''">
+                `content` = #{content} and
+            </if>
+            <if test="sorce != null and sorce!=''">
+                `sorce` = #{sorce} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Paper$QueryBuilder) == true">
+                    <if test="paperIDList != null">
+                        `paperID` in
+                        <foreach collection="paperIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPaperID!=null and fuzzyPaperID.size()>0">
+                    (
+                    <foreach collection="fuzzyPaperID"  separator="or" item="item">
+                        `PaperID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPaperID!=null and rightFuzzyPaperID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPaperID"  separator="or" item="item">
+                        `PaperID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="titleList != null">
+                        `title` in
+                        <foreach collection="titleList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyTitle!=null and fuzzyTitle.size()>0">
+                    (
+                    <foreach collection="fuzzyTitle"  separator="or" item="item">
+                        `Title` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyTitle!=null and rightFuzzyTitle.size()>0">
+                    (
+                    <foreach collection="rightFuzzyTitle"  separator="or" item="item">
+                        `Title` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="abstractList != null">
+                        `abstract` in
+                        <foreach collection="abstractList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAbstract!=null and fuzzyAbstract.size()>0">
+                    (
+                    <foreach collection="fuzzyAbstract"  separator="or" item="item">
+                        `Abstract` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAbstract!=null and rightFuzzyAbstract.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAbstract"  separator="or" item="item">
+                        `Abstract` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="keywordList != null">
+                        `keyword` in
+                        <foreach collection="keywordList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyKeyword!=null and fuzzyKeyword.size()>0">
+                    (
+                    <foreach collection="fuzzyKeyword"  separator="or" item="item">
+                        `Keyword` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyKeyword!=null and rightFuzzyKeyword.size()>0">
+                    (
+                    <foreach collection="rightFuzzyKeyword"  separator="or" item="item">
+                        `Keyword` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="classificationCodesList != null">
+                        `classificationCodes` in
+                        <foreach collection="classificationCodesList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyClassificationCodes!=null and fuzzyClassificationCodes.size()>0">
+                    (
+                    <foreach collection="fuzzyClassificationCodes"  separator="or" item="item">
+                        `ClassificationCodes` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyClassificationCodes!=null and rightFuzzyClassificationCodes.size()>0">
+                    (
+                    <foreach collection="rightFuzzyClassificationCodes"  separator="or" item="item">
+                        `ClassificationCodes` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="DOIList != null">
+                        `DOI` in
+                        <foreach collection="DOIList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyDOI!=null and fuzzyDOI.size()>0">
+                    (
+                    <foreach collection="fuzzyDOI"  separator="or" item="item">
+                        `DOI` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyDOI!=null and rightFuzzyDOI.size()>0">
+                    (
+                    <foreach collection="rightFuzzyDOI"  separator="or" item="item">
+                        `DOI` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="publishTimeList != null">
+                        `publishTime` in
+                        <foreach collection="publishTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPublishTime!=null and fuzzyPublishTime.size()>0">
+                    (
+                    <foreach collection="fuzzyPublishTime"  separator="or" item="item">
+                        `PublishTime` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPublishTime!=null and rightFuzzyPublishTime.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPublishTime"  separator="or" item="item">
+                        `PublishTime` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="fundsList != null">
+                        `funds` in
+                        <foreach collection="fundsList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFunds!=null and fuzzyFunds.size()>0">
+                    (
+                    <foreach collection="fuzzyFunds"  separator="or" item="item">
+                        `Funds` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFunds!=null and rightFuzzyFunds.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFunds"  separator="or" item="item">
+                        `Funds` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="contentList != null">
+                        `content` in
+                        <foreach collection="contentList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyContent!=null and fuzzyContent.size()>0">
+                    (
+                    <foreach collection="fuzzyContent"  separator="or" item="item">
+                        `Content` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyContent!=null and rightFuzzyContent.size()>0">
+                    (
+                    <foreach collection="rightFuzzyContent"  separator="or" item="item">
+                        `Content` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="sorceList != null">
+                        `sorce` in
+                        <foreach collection="sorceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySorce!=null and fuzzySorce.size()>0">
+                    (
+                    <foreach collection="fuzzySorce"  separator="or" item="item">
+                        `Sorce` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySorce!=null and rightFuzzySorce.size()>0">
+                    (
+                    <foreach collection="rightFuzzySorce"  separator="or" item="item">
+                        `Sorce` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `paperID`,
+        `title`,
+        `abstract`,
+        `keyword`,
+        `classificationCodes`,
+        `DOI`,
+        `publishTime`,
+        `funds`,
+        `content`,
+        `sorce`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Paper$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.paperID==true">
+                        `paperID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.title==true">
+                        `title`,
+                    </if>
+                    <if test="fetchFields.fetchFields.abstract==true">
+                        `abstract`,
+                    </if>
+                    <if test="fetchFields.fetchFields.keyword==true">
+                        `keyword`,
+                    </if>
+                    <if test="fetchFields.fetchFields.classificationCodes==true">
+                        `classificationCodes`,
+                    </if>
+                    <if test="fetchFields.fetchFields.DOI==true">
+                        `DOI`,
+                    </if>
+                    <if test="fetchFields.fetchFields.publishTime==true">
+                        `publishTime`,
+                    </if>
+                    <if test="fetchFields.fetchFields.funds==true">
+                        `funds`,
+                    </if>
+                    <if test="fetchFields.fetchFields.content==true">
+                        `content`,
+                    </if>
+                    <if test="fetchFields.fetchFields.sorce==true">
+                        `sorce`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.paperID==null">
+                        `paperID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.title==null">
+                        `title`,
+                    </if>
+                    <if test="fetchFields.excludeFields.abstract==null">
+                        `abstract`,
+                    </if>
+                    <if test="fetchFields.excludeFields.keyword==null">
+                        `keyword`,
+                    </if>
+                    <if test="fetchFields.excludeFields.classificationCodes==null">
+                        `classificationCodes`,
+                    </if>
+                    <if test="fetchFields.excludeFields.DOI==null">
+                        `DOI`,
+                    </if>
+                    <if test="fetchFields.excludeFields.publishTime==null">
+                        `publishTime`,
+                    </if>
+                    <if test="fetchFields.excludeFields.funds==null">
+                        `funds`,
+                    </if>
+                    <if test="fetchFields.excludeFields.content==null">
+                        `content`,
+                    </if>
+                    <if test="fetchFields.excludeFields.sorce==null">
+                        `sorce`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof org.buaa.platform.entity.Paper$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buaa.platform.mapper.base.inventorBaseMapper">
+
+
+    <insert id="insertinventor" >
+        INSERT INTO `inventor`
+        (
+        <trim suffixOverrides=",">
+                    <if test="patentID!=null">
+                        `patentID`,
+                    </if>
+                    <if test="specialID!=null">
+                        `specialID`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="patentID!=null">
+                    #{patentID},
+                </if>
+                <if test="specialID!=null">
+                    #{specialID},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateinventor">
+        UPDATE `inventor`
+        SET
+        <trim suffixOverrides=",">
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `patentID` = #{patentID} and
+                `specialID` = #{specialID} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `inventor`
+        SET
+        <trim suffixOverrides=",">
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.patentIDList != null">
+                    `patentID` in
+                    <foreach collection="where.patentIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyPatentID!=null and where.fuzzyPatentID.size()>0">
+                (
+                <foreach collection="where.fuzzyPatentID"  separator="or" item="item">
+                    `PatentID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyPatentID!=null and where.rightFuzzyPatentID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyPatentID"  separator="or" item="item">
+                    `PatentID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.specialIDList != null">
+                    `specialID` in
+                    <foreach collection="where.specialIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzySpecialID!=null and where.fuzzySpecialID.size()>0">
+                (
+                <foreach collection="where.fuzzySpecialID"  separator="or" item="item">
+                    `SpecialID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzySpecialID!=null and where.rightFuzzySpecialID.size()>0">
+                (
+                <foreach collection="where.rightFuzzySpecialID"  separator="or" item="item">
+                    `SpecialID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="org.buaa.platform.entity.inventor" id="inventorMap">
+        <result property="patentID" column="patentID"/>
+        <result property="specialID" column="specialID"/>
+    </resultMap>
+
+
+    <select id="queryinventor" resultMap="inventorMap">
+        select
+        <include refid="baseResult"></include>
+        from  `inventor`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="patentID != null and patentID!=''">
+                `patentID` = #{patentID} and
+            </if>
+            <if test="specialID != null and specialID!=''">
+                `specialID` = #{specialID} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.inventor$QueryBuilder) == true">
+                <if test="patentIDList != null">
+                    `patentID` in
+                    <foreach collection="patentIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPatentID!=null and fuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="fuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPatentID!=null and rightFuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="specialIDList != null">
+                    `specialID` in
+                    <foreach collection="specialIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySpecialID!=null and fuzzySpecialID.size()>0">
+                    (
+                    <foreach collection="fuzzySpecialID"  separator="or" item="item">
+                        `SpecialID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySpecialID!=null and rightFuzzySpecialID.size()>0">
+                    (
+                    <foreach collection="rightFuzzySpecialID"  separator="or" item="item">
+                        `SpecialID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryinventorLimit1" resultMap="inventorMap">
+        select
+        <include refid="baseResult"></include>
+        from  `inventor`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="patentID != null and patentID!=''">
+                `patentID` = #{patentID} and
+            </if>
+            <if test="specialID != null and specialID!=''">
+                `specialID` = #{specialID} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.inventor$QueryBuilder) == true">
+                    <if test="patentIDList != null">
+                        `patentID` in
+                        <foreach collection="patentIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPatentID!=null and fuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="fuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPatentID!=null and rightFuzzyPatentID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPatentID"  separator="or" item="item">
+                        `PatentID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="specialIDList != null">
+                        `specialID` in
+                        <foreach collection="specialIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySpecialID!=null and fuzzySpecialID.size()>0">
+                    (
+                    <foreach collection="fuzzySpecialID"  separator="or" item="item">
+                        `SpecialID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySpecialID!=null and rightFuzzySpecialID.size()>0">
+                    (
+                    <foreach collection="rightFuzzySpecialID"  separator="or" item="item">
+                        `SpecialID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `patentID`,
+        `specialID`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof org.buaa.platform.entity.inventor$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.patentID==true">
+                        `patentID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.specialID==true">
+                        `specialID`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.patentID==null">
+                        `patentID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.specialID==null">
+                        `specialID`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof org.buaa.platform.entity.inventor$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
