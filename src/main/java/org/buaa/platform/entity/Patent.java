@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.List;
 /**
 *
-*  @author author
+*  @author 
 */
 public class Patent implements Serializable {
 
-    private static final long serialVersionUID = 1575112802604L;
+    private static final long serialVersionUID = 1575631516457L;
 
 
     /**
@@ -68,7 +68,7 @@ public class Patent implements Serializable {
     public String toString() {
         return "Patent{" +
                 "patentID='" + patentID + '\'' +
-                "abstract='" + _abstract + '\'' +
+                "_abstract='" + _abstract + '\'' +
                 "applicant='" + applicant + '\'' +
                 "address='" + address + '\'' +
                 "classCode='" + classCode + '\'' +
@@ -132,18 +132,18 @@ public class Patent implements Serializable {
         private List<String> rightFuzzyPatentID;
 
         public List<String> getRightFuzzyPatentID(){return this.rightFuzzyPatentID;}
-        private List<String> abstractList;
+        private List<String> _abstractList;
 
-        public List<String> getAbstractList(){return this.abstractList;}
+        public List<String> get_abstractList(){return this._abstractList;}
 
 
-        private List<String> fuzzyAbstract;
+        private List<String> fuzzy_abstract;
 
-        public List<String> getFuzzyAbstract(){return this.fuzzyAbstract;}
+        public List<String> getFuzzy_abstract(){return this.fuzzy_abstract;}
 
-        private List<String> rightFuzzyAbstract;
+        private List<String> rightFuzzy_abstract;
 
-        public List<String> getRightFuzzyAbstract(){return this.rightFuzzyAbstract;}
+        public List<String> getRightFuzzy_abstract(){return this.rightFuzzy_abstract;}
         private List<String> applicantList;
 
         public List<String> getApplicantList(){return this.applicantList;}
@@ -229,23 +229,23 @@ public class Patent implements Serializable {
             return this;
         }
 
-        public QueryBuilder fuzzyAbstract (List<String> fuzzyAbstract){
-            this.fuzzyAbstract = fuzzyAbstract;
+        public QueryBuilder fuzzy_abstract (List<String> fuzzy_abstract){
+            this.fuzzy_abstract = fuzzy_abstract;
             return this;
         }
 
-        public QueryBuilder fuzzyAbstract (String ... fuzzyAbstract){
-            this.fuzzyAbstract = solveNullList(fuzzyAbstract);
+        public QueryBuilder fuzzy_abstract (String ... fuzzy_abstract){
+            this.fuzzy_abstract = solveNullList(fuzzy_abstract);
             return this;
         }
 
-        public QueryBuilder rightFuzzyAbstract (List<String> rightFuzzyAbstract){
-            this.rightFuzzyAbstract = rightFuzzyAbstract;
+        public QueryBuilder rightFuzzy_abstract (List<String> rightFuzzy_abstract){
+            this.rightFuzzy_abstract = rightFuzzy_abstract;
             return this;
         }
 
-        public QueryBuilder rightFuzzyAbstract (String ... rightFuzzyAbstract){
-            this.rightFuzzyAbstract = solveNullList(rightFuzzyAbstract);
+        public QueryBuilder rightFuzzy_abstract (String ... rightFuzzy_abstract){
+            this.rightFuzzy_abstract = solveNullList(rightFuzzy_abstract);
             return this;
         }
 
@@ -254,23 +254,23 @@ public class Patent implements Serializable {
             return this;
         }
 
-        public QueryBuilder abstractList(String ... _abstract){
-            this.abstractList = solveNullList(_abstract);
+        public QueryBuilder _abstractList(String ... _abstract){
+            this._abstractList = solveNullList(_abstract);
             return this;
         }
 
-        public QueryBuilder abstractList(List<String> _abstract){
-            this.abstractList = _abstract;
+        public QueryBuilder _abstractList(List<String> _abstract){
+            this._abstractList = _abstract;
             return this;
         }
 
-        public QueryBuilder fetchAbstract(){
-            setFetchFields("fetchFields","abstract");
+        public QueryBuilder fetch_abstract(){
+            setFetchFields("fetchFields","_abstract");
             return this;
         }
 
-        public QueryBuilder excludeAbstract(){
-            setFetchFields("excludeFields","abstract");
+        public QueryBuilder exclude_abstract(){
+            setFetchFields("excludeFields","_abstract");
             return this;
         }
 
@@ -463,18 +463,18 @@ public class Patent implements Serializable {
         private List<String> rightFuzzyPatentID;
 
         public List<String> getRightFuzzyPatentID(){return this.rightFuzzyPatentID;}
-        private List<String> abstractList;
+        private List<String> _abstractList;
 
-        public List<String> getAbstractList(){return this.abstractList;}
+        public List<String> get_abstractList(){return this._abstractList;}
 
 
-        private List<String> fuzzyAbstract;
+        private List<String> fuzzy_abstract;
 
-        public List<String> getFuzzyAbstract(){return this.fuzzyAbstract;}
+        public List<String> getFuzzy_abstract(){return this.fuzzy_abstract;}
 
-        private List<String> rightFuzzyAbstract;
+        private List<String> rightFuzzy_abstract;
 
-        public List<String> getRightFuzzyAbstract(){return this.rightFuzzyAbstract;}
+        public List<String> getRightFuzzy_abstract(){return this.rightFuzzy_abstract;}
         private List<String> applicantList;
 
         public List<String> getApplicantList(){return this.applicantList;}
@@ -542,33 +542,33 @@ public class Patent implements Serializable {
             return this;
         }
 
-        public ConditionBuilder fuzzyAbstract (List<String> fuzzyAbstract){
-            this.fuzzyAbstract = fuzzyAbstract;
+        public ConditionBuilder fuzzy_abstract (List<String> fuzzy_abstract){
+            this.fuzzy_abstract = fuzzy_abstract;
             return this;
         }
 
-        public ConditionBuilder fuzzyAbstract (String ... fuzzyAbstract){
-            this.fuzzyAbstract = solveNullList(fuzzyAbstract);
+        public ConditionBuilder fuzzy_abstract (String ... fuzzy_abstract){
+            this.fuzzy_abstract = solveNullList(fuzzy_abstract);
             return this;
         }
 
-        public ConditionBuilder rightFuzzyAbstract (List<String> rightFuzzyAbstract){
-            this.rightFuzzyAbstract = rightFuzzyAbstract;
+        public ConditionBuilder rightFuzzy_abstract (List<String> rightFuzzy_abstract){
+            this.rightFuzzy_abstract = rightFuzzy_abstract;
             return this;
         }
 
-        public ConditionBuilder rightFuzzyAbstract (String ... rightFuzzyAbstract){
-            this.rightFuzzyAbstract = solveNullList(rightFuzzyAbstract);
+        public ConditionBuilder rightFuzzy_abstract (String ... rightFuzzy_abstract){
+            this.rightFuzzy_abstract = solveNullList(rightFuzzy_abstract);
             return this;
         }
 
-        public ConditionBuilder abstractList(String ... _abstract){
-            this.abstractList = solveNullList(_abstract);
+        public ConditionBuilder _abstractList(String ... _abstract){
+            this._abstractList = solveNullList(_abstract);
             return this;
         }
 
-        public ConditionBuilder abstractList(List<String> _abstract){
-            this.abstractList = _abstract;
+        public ConditionBuilder _abstractList(List<String> _abstract){
+            this._abstractList = _abstract;
             return this;
         }
 

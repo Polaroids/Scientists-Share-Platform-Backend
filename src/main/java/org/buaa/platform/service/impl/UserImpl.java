@@ -11,7 +11,9 @@ public class UserImpl implements UserService {
     @Autowired
     UserMapper userMapper;
     @Override
-    public boolean login(String userName, String password) {
+    public boolean login(String userName, String password) throws Exception{
+        if (userName==null||userName.equals("")||password==null||password.equals(""))
+            throw new Exception("用户名或密码不可为空");
         User condition = User.QueryBuild().userName(userName).password(password).build();
         return userMapper.queryUser(condition).size()!=0 ;
     }

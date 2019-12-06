@@ -14,8 +14,8 @@
                     <if test="title!=null">
                         `title`,
                     </if>
-                    <if test="abstract!=null">
-                        `abstract`,
+                    <if test="_abstract!=null">
+                        `_abstract`,
                     </if>
                     <if test="keyword!=null">
                         `keyword`,
@@ -49,8 +49,8 @@
                 <if test="title!=null">
                     #{title},
                 </if>
-                <if test="abstract!=null">
-                    #{abstract},
+                <if test="_abstract!=null">
+                    #{_abstract},
                 </if>
                 <if test="keyword!=null">
                     #{keyword},
@@ -87,8 +87,8 @@
             <if test="title != null and title!=''">
                 `title` = #{title},
             </if>
-            <if test="abstract != null and abstract!=''">
-                `abstract` = #{abstract},
+            <if test="_abstract != null and _abstract!=''">
+                `_abstract` = #{_abstract},
             </if>
             <if test="keyword != null and keyword!=''">
                 `keyword` = #{keyword},
@@ -125,8 +125,8 @@
         <if test="set.title != null and set.title!=''">
             `title` = #{set.title},
         </if>
-        <if test="set.abstract != null and set.abstract!=''">
-            `abstract` = #{set.abstract},
+        <if test="set._abstract != null and set._abstract!=''">
+            `_abstract` = #{set._abstract},
         </if>
         <if test="set.keyword != null and set.keyword!=''">
             `keyword` = #{set.keyword},
@@ -191,23 +191,23 @@
                 </foreach>
                 ) and
             </if>
-                <if test="where.abstractList != null">
-                    `abstract` in
-                    <foreach collection="where.abstractList" close=")" open="(" separator="," item="item">
+                <if test="where._abstractList != null">
+                    `_abstract` in
+                    <foreach collection="where._abstractList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-            <if test ="where.fuzzyAbstract!=null and where.fuzzyAbstract.size()>0">
+            <if test ="where.fuzzy_abstract!=null and where.fuzzy_abstract.size()>0">
                 (
-                <foreach collection="where.fuzzyAbstract"  separator="or" item="item">
-                    `Abstract` like concat('%',#{item},'%')
+                <foreach collection="where.fuzzy_abstract"  separator="or" item="item">
+                    `_abstract` like concat('%',#{item},'%')
                 </foreach>
                 ) and
             </if>
-            <if test ="where.rightFuzzyAbstract!=null and where.rightFuzzyAbstract.size()>0">
+            <if test ="where.rightFuzzy_abstract!=null and where.rightFuzzy_abstract.size()>0">
                 (
-                <foreach collection="where.rightFuzzyAbstract"  separator="or" item="item">
-                    `Abstract` like concat(#{item},'%')
+                <foreach collection="where.rightFuzzy_abstract"  separator="or" item="item">
+                    `_abstract` like concat(#{item},'%')
                 </foreach>
                 ) and
             </if>
@@ -358,7 +358,7 @@
     <resultMap type="org.buaa.platform.entity.Paper" id="PaperMap">
         <result property="paperID" column="paperID"/>
         <result property="title" column="title"/>
-        <result property="abstract" column="abstract"/>
+        <result property="_abstract" column="_abstract"/>
         <result property="keyword" column="keyword"/>
         <result property="classificationCodes" column="classificationCodes"/>
         <result property="DOI" column="DOI"/>
@@ -380,8 +380,8 @@
             <if test="title != null and title!=''">
                 `title` = #{title} and
             </if>
-            <if test="abstract != null and abstract!=''">
-                `abstract` = #{abstract} and
+            <if test="_abstract != null and _abstract!=''">
+                `_abstract` = #{_abstract} and
             </if>
             <if test="keyword != null and keyword!=''">
                 `keyword` = #{keyword} and
@@ -445,23 +445,23 @@
                     </foreach>
                     ) and
                 </if>
-                <if test="abstractList != null">
-                    `abstract` in
-                    <foreach collection="abstractList" close=")" open="(" separator="," item="item">
+                <if test="_abstractList != null">
+                    `_abstract` in
+                    <foreach collection="_abstractList" close=")" open="(" separator="," item="item">
                         #{item}
                     </foreach> and
                 </if>
-                <if test ="fuzzyAbstract!=null and fuzzyAbstract.size()>0">
+                <if test ="fuzzy_abstract!=null and fuzzy_abstract.size()>0">
                     (
-                    <foreach collection="fuzzyAbstract"  separator="or" item="item">
-                        `Abstract` like concat('%',#{item},'%')
+                    <foreach collection="fuzzy_abstract"  separator="or" item="item">
+                        `_abstract` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyAbstract!=null and rightFuzzyAbstract.size()>0">
+                <if test ="rightFuzzy_abstract!=null and rightFuzzy_abstract.size()>0">
                     (
-                    <foreach collection="rightFuzzyAbstract"  separator="or" item="item">
-                        `Abstract` like concat(#{item},'%')
+                    <foreach collection="rightFuzzy_abstract"  separator="or" item="item">
+                        `_abstract` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -620,8 +620,8 @@
             <if test="title != null and title!=''">
                 `title` = #{title} and
             </if>
-            <if test="abstract != null and abstract!=''">
-                `abstract` = #{abstract} and
+            <if test="_abstract != null and _abstract!=''">
+                `_abstract` = #{_abstract} and
             </if>
             <if test="keyword != null and keyword!=''">
                 `keyword` = #{keyword} and
@@ -685,23 +685,23 @@
                     </foreach>
                     ) and
                 </if>
-                    <if test="abstractList != null">
-                        `abstract` in
-                        <foreach collection="abstractList" close=")" open="(" separator="," item="item">
+                    <if test="_abstractList != null">
+                        `_abstract` in
+                        <foreach collection="_abstractList" close=")" open="(" separator="," item="item">
                             #{item}
                         </foreach> and
                     </if>
-                <if test ="fuzzyAbstract!=null and fuzzyAbstract.size()>0">
+                <if test ="fuzzy_abstract!=null and fuzzy_abstract.size()>0">
                     (
-                    <foreach collection="fuzzyAbstract"  separator="or" item="item">
-                        `Abstract` like concat('%',#{item},'%')
+                    <foreach collection="fuzzy_abstract"  separator="or" item="item">
+                        `_abstract` like concat('%',#{item},'%')
                     </foreach>
                     ) and
                 </if>
-                <if test ="rightFuzzyAbstract!=null and rightFuzzyAbstract.size()>0">
+                <if test ="rightFuzzy_abstract!=null and rightFuzzy_abstract.size()>0">
                     (
-                    <foreach collection="rightFuzzyAbstract"  separator="or" item="item">
-                        `Abstract` like concat(#{item},'%')
+                    <foreach collection="rightFuzzy_abstract"  separator="or" item="item">
+                        `_abstract` like concat(#{item},'%')
                     </foreach>
                     ) and
                 </if>
@@ -854,7 +854,7 @@
         <trim suffixOverrides=",">
         `paperID`,
         `title`,
-        `abstract`,
+        `_abstract`,
         `keyword`,
         `classificationCodes`,
         `DOI`,
@@ -888,8 +888,8 @@
                     <if test="fetchFields.fetchFields.title==true">
                         `title`,
                     </if>
-                    <if test="fetchFields.fetchFields.abstract==true">
-                        `abstract`,
+                    <if test="fetchFields.fetchFields._abstract==true">
+                        `_abstract`,
                     </if>
                     <if test="fetchFields.fetchFields.keyword==true">
                         `keyword`,
@@ -920,8 +920,8 @@
                     <if test="fetchFields.excludeFields.title==null">
                         `title`,
                     </if>
-                    <if test="fetchFields.excludeFields.abstract==null">
-                        `abstract`,
+                    <if test="fetchFields.excludeFields._abstract==null">
+                        `_abstract`,
                     </if>
                     <if test="fetchFields.excludeFields.keyword==null">
                         `keyword`,

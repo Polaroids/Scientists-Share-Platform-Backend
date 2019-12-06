@@ -4,7 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.buaa.platform.entity.Paper;
 /**
-*  @author author
+*  @author 
 */
 public interface PaperBaseMapper {
 

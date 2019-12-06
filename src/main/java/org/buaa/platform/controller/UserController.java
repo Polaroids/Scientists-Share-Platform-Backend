@@ -1,7 +1,7 @@
 package org.buaa.platform.controller;
 
 
-import org.buaa.platform.mapper.UserMapper;
+
 import org.buaa.platform.service.UserService;
 import org.buaa.platform.tool.RetResponse;
 import org.buaa.platform.tool.RetResult;
@@ -18,9 +18,14 @@ public class UserController {
 
     @RequestMapping({"login"})
     public RetResult<Object> login(String userName, String password){
-        if(userService.login(userName,password)){
-            return RetResponse.makeOKRsp();
+        try {
+            if (userService.login(userName, password)) {
+                return RetResponse.makeOKRsp();
+            }
+            return RetResponse.makeErrRsp("用户名或密码错误");
         }
-        return RetResponse.makeErrRsp("用户名或密码错误");
+        catch (Exception e){
+            return RetResponse.makeErrRsp(e.getMessage());
+        }
     }
 }

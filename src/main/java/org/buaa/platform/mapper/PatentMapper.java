@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.buaa.platform.entity.Patent;
 import org.buaa.platform.mapper.base.PatentBaseMapper;
 /**
-*  @author author
+*  @author 
 */
 public interface PatentMapper extends PatentBaseMapper{
 
