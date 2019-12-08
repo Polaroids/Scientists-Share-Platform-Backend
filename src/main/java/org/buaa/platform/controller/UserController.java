@@ -28,4 +28,17 @@ public class UserController {
             return RetResponse.makeErrRsp(e.getMessage());
         }
     }
+    
+    @RequestMapping({"register"})
+    public RetResult<Object> register(String userName, String password, String email){
+        try {   	
+            if (userService.register(userName, password, email)) {
+                return RetResponse.makeOKRsp();
+            }
+            return RetResponse.makeErrRsp("注册失败");
+        }
+        catch (Exception e){
+            return RetResponse.makeErrRsp(e.getMessage());
+        }
+    }
 }

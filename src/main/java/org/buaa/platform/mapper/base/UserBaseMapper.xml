@@ -822,5 +822,10 @@
         </trim>
     </sql>
 
+	<resultMap type="String" id="UID"></resultMap>
+
+	<select id="queryCurUserID" resultMap="UID">
+		SELECT max(userID) from `User`
+	</select>
 
 </mapper>
