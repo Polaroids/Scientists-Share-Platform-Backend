@@ -4,22 +4,26 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.shiro.authc.AuthenticationException;
 import org.buaa.platform.entity.User;
 import org.buaa.platform.mapper.UserMapper;
 import org.buaa.platform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class UserImpl implements UserService {
     @Autowired
     UserMapper userMapper;
     @Override
-    public boolean login(String userName, String password) throws Exception{
+    public boolean login(String userName, String password) throws AuthenticationException {
         if (userName==null||userName.equals("")||password==null||password.equals(""))
-            throw new Exception("用户名或密码不可为空");
+            throw new AuthenticationException("用户名或密码不可为空");
         User condition = User.QueryBuild().userName(userName).password(password).build();
-        return userMapper.queryUser(condition).size()!=0 ;
+        if (userMapper.queryUserLimit1(condition) == null)
+        	throw new AuthenticationException("用户名或密码错误");
+        return true;
     }
     @Override
     public boolean register(String userName, String password, String email) throws Exception {
@@ -32,6 +36,8 @@ public class UserImpl implements UserService {
     	if(ans.size() > 0) {
     		throw new Exception("用户名已注册");
     	}
+    	if (userMapper.queryUserLimit1(User.QueryBuild().email(email)) != null)
+			throw new Exception("email已被注册");
     	u.setPassword(password);
     	u.setEmail(email);
     	u.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -44,5 +50,14 @@ public class UserImpl implements UserService {
     	userMapper.insertUser(u);
     	return true;
     }
-    
+
+	@Override
+	public User getInfo(String userName) throws Exception {
+    	User con = User.QueryBuild().userName(userName);
+    	User ans = userMapper.queryUserLimit1(con);
+		if (ans == null) {
+			throw new Exception("不存在的用户");
+		}
+		return ans;
+	}
 }

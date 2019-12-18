@@ -1,11 +1,14 @@
 package org.buaa.platform.mapper.base;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.buaa.platform.entity.Institution;
 /**
 *  @author author
 */
+@Mapper
 public interface InstitutionBaseMapper {
 
     int insertInstitution(Institution object);

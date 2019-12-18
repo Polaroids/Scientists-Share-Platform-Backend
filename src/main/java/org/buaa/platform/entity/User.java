@@ -1,4 +1,6 @@
 package org.buaa.platform.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +38,7 @@ public class User implements Serializable {
     * 
     * isNullAble:0
     */
+    @JsonIgnore
     private String password;
 
     /**

@@ -1,9 +1,12 @@
 package org.buaa.platform.service;
 
-import org.springframework.stereotype.Service;
+import org.apache.shiro.authc.AuthenticationException;
+import org.buaa.platform.entity.User;
 
 public interface UserService {
-    boolean login(String userName,String password)throws Exception;
+    public boolean login(String userName,String password)throws AuthenticationException;
     
-    boolean register(String userName, String password, String email)throws Exception;
+    public boolean register(String userName, String password, String email)throws Exception;
+
+    public User getInfo(String userName)throws Exception;
 }
