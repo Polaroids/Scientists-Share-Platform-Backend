@@ -822,10 +822,8 @@
         </trim>
     </sql>
 
-	<resultMap type="String" id="UID"></resultMap>
-
-	<select id="queryCurUserID" resultMap="UID">
-		SELECT max(userID) from `User`
+	<select id="queryCurUserID" resultType="java.lang.Integer">
+		SELECT count(userID) from `User`
 	</select>
 
 </mapper>

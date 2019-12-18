@@ -41,11 +41,10 @@ public class UserImpl implements UserService {
     	u.setPassword(password);
     	u.setEmail(email);
     	u.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-    	String userID = userMapper.queryCurUserID();
-    	int uid = Integer.parseInt(userID) + 1;
-    	userID = uid + "";
+    	int userID = userMapper.queryCurUserID();
+    	int uid = userID + 1;
     	
-    	u.setUserID(userID);
+    	u.setUserID(String.valueOf(uid));
     	//此时要插入记录并且返回true
     	userMapper.insertUser(u);
     	return true;

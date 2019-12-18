@@ -20,5 +20,5 @@ public interface UserBaseMapper {
 
     User queryUserLimit1(User object);
 
-    String queryCurUserID();
+    int queryCurUserID();
 }

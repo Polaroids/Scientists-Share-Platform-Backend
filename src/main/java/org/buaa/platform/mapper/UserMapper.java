@@ -5,4 +5,5 @@ import org.buaa.platform.mapper.base.UserBaseMapper;
 
 @Mapper
 public interface UserMapper extends UserBaseMapper {
+    Integer getTotal();
 }
