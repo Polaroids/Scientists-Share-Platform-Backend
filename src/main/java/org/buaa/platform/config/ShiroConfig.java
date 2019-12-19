@@ -1,8 +1,13 @@
 package org.buaa.platform.config;
 
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.Cookie;
+import org.apache.shiro.web.servlet.ShiroHttpSession;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -47,12 +52,20 @@ public class ShiroConfig {
     public SecurityManager securityManager() {
         DefaultWebSecurityManager defaultSecurityManager = new DefaultWebSecurityManager();
         defaultSecurityManager.setRealm(customRealm());
+        defaultSecurityManager.setSessionManager(sessionManager());
         return defaultSecurityManager;
+    }
+    @Bean
+    public SessionManager sessionManager() {
+        SessionManager sessionManager = new DefaultWebSessionManager();
+        Cookie cookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
+        cookie.setMaxAge(60 * 60);
+        ((DefaultWebSessionManager) sessionManager).setSessionIdCookie(cookie);
+        return sessionManager;
     }
 
     @Bean
     public CustomRealm customRealm() {
-        CustomRealm customRealm = new CustomRealm();
-        return customRealm;
+        return new CustomRealm();
     }
 }

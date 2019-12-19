@@ -32,4 +32,8 @@ public class SpecialController {
             return RetResponse.makeErrRsp(e.getMessage());
         }
     }
+    @GetMapping(value = "search")
+    public RetResult<Object> search(String name,Integer crtPage,Integer pageSize){
+        return RetResponse.makeOKRsp(specialService.search(name,crtPage,pageSize));
+    }
 }

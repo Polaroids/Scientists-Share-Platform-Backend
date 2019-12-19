@@ -10,7 +10,9 @@ import org.buaa.platform.service.SpecialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SpecialImpl implements SpecialService {
@@ -39,5 +41,21 @@ public class SpecialImpl implements SpecialService {
         }
         Paper con1 = Paper.QueryBuild().paperIDList(list);
         return  paperMapper.queryPaper(Paper.QueryBuild().paperIDList(list));
+    }
+
+    @Override
+    public Map<String,Object> search(String name, Integer crtPage, Integer pageSize){
+        if (crtPage==null)
+            crtPage = 0;
+        if (pageSize==null)
+            pageSize = 10;
+        List<Special> list = specialMapper.querySpecial(Special.QueryBuild().fuzzyName(name));
+        int st = crtPage * pageSize;
+        int ed = st + pageSize < list.size() ? st + pageSize : list.size();
+        Map<String,Object> map = new HashMap<>();
+        map.put("totalPage",list.size()/pageSize + 1);
+        map.put("crtPage",crtPage);
+        map.put("list",list.subList(st,ed));
+        return map;
     }
 }

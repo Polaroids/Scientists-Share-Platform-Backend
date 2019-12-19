@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buaa.platform.mapper.base.StarBaseMapper">
+
+
+    <insert id="insertStar" >
+        INSERT INTO `Star`
+        (
+        <trim suffixOverrides=",">
+                    <if test="userID!=null">
+                        `userID`,
+                    </if>
+                    <if test="paperID!=null">
+                        `paperID`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="userID!=null">
+                    #{userID},
+                </if>
+                <if test="paperID!=null">
+                    #{paperID},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateStar">
+        UPDATE `Star`
+        SET
+        <trim suffixOverrides=",">
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID},
+            </if>
+            <if test="paperID != null and paperID!=''">
+                `paperID` = #{paperID},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `Star`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.userID != null and set.userID!=''">
+            `userID` = #{set.userID},
+        </if>
+        <if test="set.paperID != null and set.paperID!=''">
+            `paperID` = #{set.paperID},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.userIDList != null">
+                    `userID` in
+                    <foreach collection="where.userIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyUserID!=null and where.fuzzyUserID.size()>0">
+                (
+                <foreach collection="where.fuzzyUserID"  separator="or" item="item">
+                    `UserID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyUserID!=null and where.rightFuzzyUserID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyUserID"  separator="or" item="item">
+                    `UserID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.paperIDList != null">
+                    `paperID` in
+                    <foreach collection="where.paperIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyPaperID!=null and where.fuzzyPaperID.size()>0">
+                (
+                <foreach collection="where.fuzzyPaperID"  separator="or" item="item">
+                    `PaperID` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyPaperID!=null and where.rightFuzzyPaperID.size()>0">
+                (
+                <foreach collection="where.rightFuzzyPaperID"  separator="or" item="item">
+                    `PaperID` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="org.buaa.platform.entity.Star" id="StarMap">
+        <result property="userID" column="userID"/>
+        <result property="paperID" column="paperID"/>
+    </resultMap>
+
+
+    <select id="queryStar" resultMap="StarMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Star`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID} and
+            </if>
+            <if test="paperID != null and paperID!=''">
+                `paperID` = #{paperID} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Star$QueryBuilder) == true">
+                <if test="userIDList != null">
+                    `userID` in
+                    <foreach collection="userIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyUserID!=null and fuzzyUserID.size()>0">
+                    (
+                    <foreach collection="fuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserID!=null and rightFuzzyUserID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="paperIDList != null">
+                    `paperID` in
+                    <foreach collection="paperIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPaperID!=null and fuzzyPaperID.size()>0">
+                    (
+                    <foreach collection="fuzzyPaperID"  separator="or" item="item">
+                        `PaperID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPaperID!=null and rightFuzzyPaperID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPaperID"  separator="or" item="item">
+                        `PaperID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryStarLimit1" resultMap="StarMap">
+        select
+        <include refid="baseResult"></include>
+        from  `Star`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="userID != null and userID!=''">
+                `userID` = #{userID} and
+            </if>
+            <if test="paperID != null and paperID!=''">
+                `paperID` = #{paperID} and
+            </if>
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Star$QueryBuilder) == true">
+                    <if test="userIDList != null">
+                        `userID` in
+                        <foreach collection="userIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyUserID!=null and fuzzyUserID.size()>0">
+                    (
+                    <foreach collection="fuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUserID!=null and rightFuzzyUserID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUserID"  separator="or" item="item">
+                        `UserID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="paperIDList != null">
+                        `paperID` in
+                        <foreach collection="paperIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPaperID!=null and fuzzyPaperID.size()>0">
+                    (
+                    <foreach collection="fuzzyPaperID"  separator="or" item="item">
+                        `PaperID` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPaperID!=null and rightFuzzyPaperID.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPaperID"  separator="or" item="item">
+                        `PaperID` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `userID`,
+        `paperID`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof org.buaa.platform.entity.Star$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.userID==true">
+                        `userID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.paperID==true">
+                        `paperID`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.userID==null">
+                        `userID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.paperID==null">
+                        `paperID`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof org.buaa.platform.entity.Star$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
