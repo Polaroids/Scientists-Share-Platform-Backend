@@ -16,6 +16,8 @@ public class PaperImpl implements PaperService {
         Paper ans = paperMapper.queryPaperLimit1(con);
         if (ans == null)
             throw new Exception("论文不存在");
+        ans.setViews(ans.getViews()+1);
+        paperMapper.updatePaper(ans);
         return ans;
     }
 }

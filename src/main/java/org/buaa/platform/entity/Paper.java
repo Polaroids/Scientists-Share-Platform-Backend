@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class Paper implements Serializable {
 
-    private static final long serialVersionUID = 1576649350941L;
+    private static final long serialVersionUID = 1576839091565L;
 
 
     /**
@@ -80,6 +80,12 @@ public class Paper implements Serializable {
     */
     private String authors;
 
+    /**
+    * 
+    * isNullAble:0,defaultVal:0
+    */
+    private Integer views;
+
 
     public void setPaperID(String paperID){this.paperID = paperID;}
 
@@ -124,6 +130,10 @@ public class Paper implements Serializable {
     public void setAuthors(String authors){this.authors = authors;}
 
     public String getAuthors(){return this.authors;}
+
+    public void setViews(Integer views){this.views = views;}
+
+    public Integer getViews(){return this.views;}
     @Override
     public String toString() {
         return "Paper{" +
@@ -138,6 +148,7 @@ public class Paper implements Serializable {
                 "url='" + url + '\'' +
                 "sorce='" + sorce + '\'' +
                 "authors='" + authors + '\'' +
+                "views='" + views + '\'' +
             '}';
     }
 
@@ -318,6 +329,18 @@ public class Paper implements Serializable {
         private List<String> rightFuzzyAuthors;
 
         public List<String> getRightFuzzyAuthors(){return this.rightFuzzyAuthors;}
+        private List<Integer> viewsList;
+
+        public List<Integer> getViewsList(){return this.viewsList;}
+
+        private Integer viewsSt;
+
+        private Integer viewsEd;
+
+        public Integer getViewsSt(){return this.viewsSt;}
+
+        public Integer getViewsEd(){return this.viewsEd;}
+
         private QueryBuilder (){
             this.fetchFields = new HashMap<>();
         }
@@ -816,6 +839,47 @@ public class Paper implements Serializable {
             setFetchFields("excludeFields","authors");
             return this;
         }
+
+        public QueryBuilder viewsBetWeen(Integer viewsSt,Integer viewsEd){
+            this.viewsSt = viewsSt;
+            this.viewsEd = viewsEd;
+            return this;
+        }
+
+        public QueryBuilder viewsGreaterEqThan(Integer viewsSt){
+            this.viewsSt = viewsSt;
+            return this;
+        }
+        public QueryBuilder viewsLessEqThan(Integer viewsEd){
+            this.viewsEd = viewsEd;
+            return this;
+        }
+
+
+        public QueryBuilder views(Integer views){
+            setViews(views);
+            return this;
+        }
+
+        public QueryBuilder viewsList(Integer ... views){
+            this.viewsList = solveNullList(views);
+            return this;
+        }
+
+        public QueryBuilder viewsList(List<Integer> views){
+            this.viewsList = views;
+            return this;
+        }
+
+        public QueryBuilder fetchViews(){
+            setFetchFields("fetchFields","views");
+            return this;
+        }
+
+        public QueryBuilder excludeViews(){
+            setFetchFields("excludeFields","views");
+            return this;
+        }
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -991,6 +1055,18 @@ public class Paper implements Serializable {
         private List<String> rightFuzzyAuthors;
 
         public List<String> getRightFuzzyAuthors(){return this.rightFuzzyAuthors;}
+        private List<Integer> viewsList;
+
+        public List<Integer> getViewsList(){return this.viewsList;}
+
+        private Integer viewsSt;
+
+        private Integer viewsEd;
+
+        public Integer getViewsSt(){return this.viewsSt;}
+
+        public Integer getViewsEd(){return this.viewsEd;}
+
 
         public ConditionBuilder fuzzyPaperID (List<String> fuzzyPaperID){
             this.fuzzyPaperID = fuzzyPaperID;
@@ -1322,6 +1398,32 @@ public class Paper implements Serializable {
             return this;
         }
 
+        public ConditionBuilder viewsBetWeen(Integer viewsSt,Integer viewsEd){
+            this.viewsSt = viewsSt;
+            this.viewsEd = viewsEd;
+            return this;
+        }
+
+        public ConditionBuilder viewsGreaterEqThan(Integer viewsSt){
+            this.viewsSt = viewsSt;
+            return this;
+        }
+        public ConditionBuilder viewsLessEqThan(Integer viewsEd){
+            this.viewsEd = viewsEd;
+            return this;
+        }
+
+
+        public ConditionBuilder viewsList(Integer ... views){
+            this.viewsList = solveNullList(views);
+            return this;
+        }
+
+        public ConditionBuilder viewsList(List<Integer> views){
+            this.viewsList = views;
+            return this;
+        }
+
         private <T>List<T> solveNullList(T ... objs){
             if (objs != null){
             List<T> list = new ArrayList<>();
@@ -1388,6 +1490,10 @@ public class Paper implements Serializable {
         }
         public Builder authors(String authors){
             this.obj.setAuthors(authors);
+            return this;
+        }
+        public Builder views(Integer views){
+            this.obj.setViews(views);
             return this;
         }
         public Paper build(){return obj;}

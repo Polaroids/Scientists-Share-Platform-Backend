@@ -41,6 +41,9 @@
                     <if test="authors!=null">
                         `authors`,
                     </if>
+                    <if test="views!=null">
+                        `views`,
+                    </if>
         </trim>
         )
         VALUES
@@ -78,6 +81,9 @@
                 </if>
                 <if test="authors!=null">
                     #{authors},
+                </if>
+                <if test="views!=null">
+                    #{views},
                 </if>
         </trim>
         )
@@ -120,6 +126,9 @@
             <if test="authors != null and authors!=''">
                 `authors` = #{authors},
             </if>
+            <if test="views != null">
+                `views` = #{views},
+            </if>
         </trim>
         WHERE
         <trim suffixOverrides="and">
@@ -160,6 +169,9 @@
         </if>
         <if test="set.authors != null and set.authors!=''">
             `authors` = #{set.authors},
+        </if>
+        <if test="set.views != null">
+            `views` = #{set.views},
         </if>
         </trim>
         <trim prefix="where" suffixOverrides="and | or">
@@ -383,6 +395,18 @@
                 </foreach>
                 ) and
             </if>
+                <if test="where.viewsList != null">
+                    `views` in
+                    <foreach collection="where.viewsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.viewsSt !=null">
+                `views` >= #{where.viewsSt} and
+            </if>
+            <if test="where.viewsEd!=null">
+                `views` &lt;= #{where.viewsEd} and
+            </if>
         </trim>
     </update>
 
@@ -399,6 +423,7 @@
         <result property="url" column="url"/>
         <result property="sorce" column="sorce"/>
         <result property="authors" column="authors"/>
+        <result property="views" column="views"/>
     </resultMap>
 
 
@@ -439,6 +464,9 @@
             </if>
             <if test="authors != null and authors!=''">
                 `authors` = #{authors} and
+            </if>
+            <if test="views != null">
+                `views` = #{views} and
             </if>
             <if test = "(_parameter instanceof org.buaa.platform.entity.Paper$QueryBuilder) == true">
                 <if test="paperIDList != null">
@@ -661,6 +689,18 @@
                     </foreach>
                     ) and
                 </if>
+                <if test="viewsList != null">
+                    `views` in
+                    <foreach collection="viewsList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="viewsSt !=null">
+                    `views` >= #{viewsSt} and
+                </if>
+                <if test="viewsEd!=null">
+                    `views` &lt;= #{viewsEd} and
+                </if>
             </if>
         </trim>
     </select>
@@ -702,6 +742,9 @@
             </if>
             <if test="authors != null and authors!=''">
                 `authors` = #{authors} and
+            </if>
+            <if test="views != null">
+                `views` = #{views} and
             </if>
             <if test = "(_parameter instanceof org.buaa.platform.entity.Paper$QueryBuilder) == true">
                     <if test="paperIDList != null">
@@ -924,6 +967,18 @@
                     </foreach>
                     ) and
                 </if>
+                    <if test="viewsList != null">
+                        `views` in
+                        <foreach collection="viewsList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="viewsSt !=null">
+                    `views` >= #{viewsSt} and
+                </if>
+                <if test="viewsEd!=null">
+                    `views` &lt;= #{viewsEd} and
+                </if>
             </if>
         </trim>
         limit 1
@@ -942,6 +997,7 @@
         `url`,
         `sorce`,
         `authors`,
+        `views`,
         </trim>
     </sql>
 
@@ -995,6 +1051,9 @@
                     <if test="fetchFields.fetchFields.authors==true">
                         `authors`,
                     </if>
+                    <if test="fetchFields.fetchFields.views==true">
+                        `views`,
+                    </if>
                     </if>
                     <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
                     <if test="fetchFields.excludeFields.paperID==null">
@@ -1029,6 +1088,9 @@
                     </if>
                     <if test="fetchFields.excludeFields.authors==null">
                         `authors`,
+                    </if>
+                    <if test="fetchFields.excludeFields.views==null">
+                        `views`,
                     </if>
                     </if>
                     <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
