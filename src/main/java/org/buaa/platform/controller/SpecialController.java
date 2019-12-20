@@ -1,5 +1,6 @@
 package org.buaa.platform.controller;
 
+import org.buaa.platform.service.MailService;
 import org.buaa.platform.service.SpecialService;
 import org.buaa.platform.tool.RetResponse;
 import org.buaa.platform.tool.RetResult;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SpecialController {
     @Autowired
     SpecialService specialService;
+    @Autowired
+    MailService mailService;
     @GetMapping({"detail"})
     public RetResult<Object> getDetail(String specialID){
         try {
@@ -32,8 +35,18 @@ public class SpecialController {
             return RetResponse.makeErrRsp(e.getMessage());
         }
     }
-    @GetMapping(value = "search")
+    @GetMapping(value = "/search")
     public RetResult<Object> search(String name,Integer crtPage,Integer pageSize){
         return RetResponse.makeOKRsp(specialService.search(name,crtPage,pageSize));
+    }
+    @GetMapping(value = "/confirm")
+    public RetResult<Object> confirm(String userID,String specialID,String email){
+        try {
+            specialService.confirm(userID,specialID,email);
+            return RetResponse.makeOKRsp();
+        }
+        catch (Exception e){
+            return RetResponse.makeErrRsp(e.getMessage());
+        }
     }
 }

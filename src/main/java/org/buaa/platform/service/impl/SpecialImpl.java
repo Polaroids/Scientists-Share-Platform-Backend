@@ -3,9 +3,11 @@ package org.buaa.platform.service.impl;
 import org.buaa.platform.entity.Authors;
 import org.buaa.platform.entity.Paper;
 import org.buaa.platform.entity.Special;
+import org.buaa.platform.entity.User;
 import org.buaa.platform.mapper.AuthorsMapper;
 import org.buaa.platform.mapper.PaperMapper;
 import org.buaa.platform.mapper.SpecialMapper;
+import org.buaa.platform.mapper.UserMapper;
 import org.buaa.platform.service.SpecialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public class SpecialImpl implements SpecialService {
     AuthorsMapper authorsMapper;
     @Autowired
     PaperMapper paperMapper;
+    @Autowired
+    UserMapper userMapper;
     @Override
     public Special getDetail(String specialID) throws Exception {
         Special con = Special.QueryBuild().specialID(specialID);
@@ -57,5 +61,24 @@ public class SpecialImpl implements SpecialService {
         map.put("crtPage",crtPage);
         map.put("list",list.subList(st,ed));
         return map;
+    }
+
+    @Override
+    public void confirm(String userID, String specialID, String email) throws Exception{
+        if (userID==null || userID.equals(""))
+            throw new Exception("error userID");
+        if (specialID==null||specialID.equals(""))
+            throw new Exception("error specialID");
+        if (email == null || email.equals(""))
+            throw new Exception("error email");
+        User user = new User();
+        user.setUserID(userID);
+        user.setSpecialID(specialID);
+        userMapper.updateUser(user);
+        Special special = new Special();
+        special.setSpecialID(specialID);
+        special.setEmail(email);
+        special.setClaimed(1);
+        specialMapper.updateSpecial(special);
     }
 }

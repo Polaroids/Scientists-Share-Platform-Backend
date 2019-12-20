@@ -5,10 +5,13 @@ package org.buaa.platform.controller;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
+import org.buaa.platform.entity.User;
+import org.buaa.platform.service.MailService;
 import org.buaa.platform.service.UserService;
 import org.buaa.platform.tool.RetResponse;
 import org.buaa.platform.tool.RetResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private MailService mailService;
+    @Value("${serviceUrl}")
+    String url;
     @PostMapping({"login"})
     public RetResult<Object> login(String userName, String password){
         if (userName==null||password==null)
@@ -64,6 +70,7 @@ public class UserController {
             return RetResponse.makeErrRsp(e.getMessage());
         }
     }
+
     @GetMapping(value = "/person")
     public RetResult<Object> person(){
         Subject subject = SecurityUtils.getSubject();
@@ -72,6 +79,26 @@ public class UserController {
             return RetResponse.makeOKRsp(userService.getInfo(username));
         }
         catch (Exception e){
+            return RetResponse.makeErrRsp(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/claim")
+    public RetResult<Object> claim(String specialID,String email){
+        Subject subject = SecurityUtils.getSubject();
+        String username = (String)subject.getPrincipal();
+        try {
+            User user =  userService.getInfo(username);
+            String content = "点击链接即可成功激活:"+url+"/api/special/confirm?userID=%s&specialID=%s&email=%s";
+            content = String.format(content,user.getUserID(),specialID,email);
+            mailService.sendSimpleMail(
+                    email,
+                    "认领激活邮件",
+                    content);
+            return RetResponse.makeOKRsp();
+        }
+        catch (Exception e)
+        {
             return RetResponse.makeErrRsp(e.getMessage());
         }
     }
